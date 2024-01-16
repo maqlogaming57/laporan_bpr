@@ -12,27 +12,18 @@ const Debiturs = () => {
     axios
       .get(API_URL)
       .then((response) => {
-        const data = response.data
+        const data = response.data.data // Ubah ini sesuai dengan struktur respons API Anda
 
         if (data && data.length > 0) {
+          console.log('Fetched users successfully:', data)
           setUsers(data)
           setSelectedUser(data[0].nocif) // Opsional: Set nilai default berdasarkan properti yang sesuai
-            .then((response) => {
-              const data = response.data
-              console.log('Data from API:', data)
-
-              if (data && data.length > 0) {
-                setUsers(data)
-                setSelectedUser(data[0].nocif)
-              }
-            })
         }
       })
       .catch((error) => {
         console.error('Error fetching users:', error)
       })
   }, [])
-
   return (
     <CRow>
       <CCol xs={12}>
@@ -53,7 +44,7 @@ const Debiturs = () => {
               <option>Select a user</option>
               {users.map((user, index) => (
                 <option key={index} value={user.nocif}>
-                  {user.nama}
+                  {user.nama}_{user.nokontrak}
                 </option>
               ))}
             </CFormSelect>
