@@ -93,22 +93,20 @@ const Debiturs = () => {
                       >
                         !
                       </CButton>
-                      {/* <div>
+                      <div>
                         <CCol xs={12}>
                           <CCollapse visible={visible}>
                             <CTable small borderless>
                               <CTableHead>
                                 <CTableRow>
-                                  <CTableHeaderCell>Nama</CTableHeaderCell>
-                                  <CTableDataCell>{user.nama}</CTableDataCell>
-                                  <CTableHeaderCell>Alamat</CTableHeaderCell>
-                                  <CTableDataCell>{user.alamat}</CTableDataCell>
+                                  <CTableHeaderCell scope="col">Angsuran</CTableHeaderCell>
+                                  <CTableHeaderCell scope="col">{user.angsttl}</CTableHeaderCell>
                                 </CTableRow>
                               </CTableHead>
                             </CTable>
                           </CCollapse>
                         </CCol>
-                      </div> */}
+                      </div>
                     </CTableHeaderCell>
                     <CTableDataCell>{user.nokontrak}</CTableDataCell>
                     <CTableDataCell>{user.nama}</CTableDataCell>
