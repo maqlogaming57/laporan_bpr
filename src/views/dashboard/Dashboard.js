@@ -181,6 +181,46 @@ const Dashboard = () => {
   return (
     <>
       <WidgetsDropdown />
+      <CRow>
+        <CCol xs={12}>
+          <CCard className="mb-4">
+            <CCardHeader>
+              <strong>Nasabah</strong> <small>COLL 2</small>
+            </CCardHeader>
+            <CTable>
+              <CTableHead>
+                <CTableRow>
+                  <CTableHeaderCell scope="col">#</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Nama</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Alamat</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Hari</CTableHeaderCell>
+                </CTableRow>
+              </CTableHead>
+              <CTableBody>
+                <CTableRow>
+                  <CTableHeaderCell scope="row">1</CTableHeaderCell>
+                  <CTableDataCell>Mark</CTableDataCell>
+                  <CTableDataCell>Otto</CTableDataCell>
+                  <CTableDataCell>@mdo</CTableDataCell>
+                </CTableRow>
+                <CTableRow>
+                  <CTableHeaderCell scope="row">2</CTableHeaderCell>
+                  <CTableDataCell>Jacob</CTableDataCell>
+                  <CTableDataCell>Thornton</CTableDataCell>
+                  <CTableDataCell>@fat</CTableDataCell>
+                </CTableRow>
+                <CTableRow>
+                  <CTableHeaderCell scope="row"></CTableHeaderCell>
+                  <CTableDataCell colSpan={2}>
+                    <strong>Total</strong>
+                  </CTableDataCell>
+                  <CTableDataCell>@twitter</CTableDataCell>
+                </CTableRow>
+              </CTableBody>
+            </CTable>
+          </CCard>
+        </CCol>
+      </CRow>
       <CCard className="mb-4">
         <CCardBody>
           <CRow>

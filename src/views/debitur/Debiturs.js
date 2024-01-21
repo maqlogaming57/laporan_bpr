@@ -14,14 +14,16 @@ import {
   CTableRow,
   CTableBody,
   CTableDataCell,
-  CCollapse,
 } from '@coreui/react'
+import CIcon from '@coreui/icons-react'
+import * as icon from '@coreui/icons'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 const Debiturs = () => {
   const [selectedUserData, setSelectedUserData] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
-  const [visible, setVisible] = useState(false)
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -47,6 +49,14 @@ const Debiturs = () => {
     e.preventDefault()
     // Panggil fungsi fetch data di sini untuk memperbarui data dengan pencarian
   }
+  const handleButtonClick = (user) => {
+    // Simpan data pengguna dalam state lokal
+    setSelectedUserData(user)
+
+    // Navigasi ke halaman ViewDebiturs
+    navigate('../theme/debitur/ViewDebiturs', { state: { selectedUserData: user } })
+  }
+  let i = 0
 
   return (
     <CRow>
@@ -77,42 +87,21 @@ const Debiturs = () => {
                 <CTableHeaderCell scope="col">#</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Nama</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Nokontrak</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Class</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Action</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
               {selectedUserData.map((user, index) => (
                 <React.Fragment key={index}>
                   <CTableRow>
-                    <CTableHeaderCell scope="row">
-                      <CButton
-                        className="mb-3"
-                        onClick={() => setVisible(!visible)}
-                        aria-expanded={visible}
-                        aria-controls="collapseWidthExample"
-                      >
-                        !
-                      </CButton>
-                      {/* <div>
-                        <CCol xs={12}>
-                          <CCollapse visible={visible}>
-                            <CTable small borderless>
-                              <CTableHead>
-                                <CTableRow>
-                                  <CTableHeaderCell>Nama</CTableHeaderCell>
-                                  <CTableDataCell>{user.nama}</CTableDataCell>
-                                  <CTableHeaderCell>Alamat</CTableHeaderCell>
-                                  <CTableDataCell>{user.alamat}</CTableDataCell>
-                                </CTableRow>
-                              </CTableHead>
-                            </CTable>
-                          </CCollapse>
-                        </CCol>
-                      </div> */}
-                    </CTableHeaderCell>
-                    <CTableDataCell>{user.nokontrak}</CTableDataCell>
+                    <CTableHeaderCell scope="row">{++i}</CTableHeaderCell>
                     <CTableDataCell>{user.nama}</CTableDataCell>
-                    <CTableDataCell>{user.mdlawal}</CTableDataCell>
+                    <CTableDataCell>{user.nokontrak}</CTableDataCell>
+                    <CTableDataCell>
+                      <CButton color="dark" onClick={() => handleButtonClick(user)}>
+                        <CIcon icon={icon.cilFolder} size="s" />
+                      </CButton>
+                    </CTableDataCell>
                   </CTableRow>
                 </React.Fragment>
               ))}
