@@ -7,13 +7,9 @@ import {
   CCol,
   CRow,
   CTable,
-  CFormInput,
-  CForm,
-  CButton,
   CTableHead,
   CTableHeaderCell,
   CTableRow,
-  CTableBody,
   CTableDataCell,
 } from '@coreui/react'
 

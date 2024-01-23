@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import {
   CAvatar,
@@ -53,6 +53,7 @@ import avatar6 from 'src/assets/images/avatars/6.jpg'
 
 import WidgetsBrand from '../widgets/WidgetsBrand'
 import WidgetsDropdown from '../widgets/WidgetsDropdown'
+import axios from 'axios'
 
 const Dashboard = () => {
   const random = (min, max) => Math.floor(Math.random() * (max - min + 1) + min)
@@ -177,6 +178,35 @@ const Dashboard = () => {
       activity: 'Last week',
     },
   ]
+  let i = 0
+  const [data, setData] = useState([])
+  const [totalNominal, setTotalNomial] = useState(0)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:4000/colls')
+        const responData = response.data.data
+        const calculatedTotal = data.reduce((acc, user) => acc + user.osmdlc, 0)
+        setTotalNomial(calculatedTotal)
+        setData(responData)
+      } catch (error) {
+        console.error('Error fetching users:', error)
+      }
+    }
+    fetchData()
+  }, [data])
+
+  const formatToRupiah = (amount) => {
+    return new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    })
+      .format(amount)
+      .replace('Rp', '')
+  }
 
   return (
     <>
@@ -187,34 +217,37 @@ const Dashboard = () => {
             <CCardHeader>
               <strong>Nasabah</strong> <small>COLL 2</small>
             </CCardHeader>
-            <CTable>
+            <CTable small striped hover>
               <CTableHead>
                 <CTableRow>
                   <CTableHeaderCell scope="col">#</CTableHeaderCell>
                   <CTableHeaderCell scope="col">Nama</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Alamat</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Nokontrak</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Kdaoh</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Kdprd</CTableHeaderCell>
                   <CTableHeaderCell scope="col">Hari</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Osmdlc</CTableHeaderCell>
                 </CTableRow>
               </CTableHead>
               <CTableBody>
+                {data.map((user, index) => {
+                  return (
+                    <CTableRow key={index}>
+                      <CTableHeaderCell scope="row">{++i}</CTableHeaderCell>
+                      <CTableDataCell>{user.nama}</CTableDataCell>
+                      <CTableDataCell>{user.nokontrak}</CTableDataCell>
+                      <CTableDataCell>{user.kdaoh}</CTableDataCell>
+                      <CTableDataCell>{user.kdprd}</CTableDataCell>
+                      <CTableDataCell>{user.haritgkmdl}</CTableDataCell>
+                      <CTableDataCell>{formatToRupiah(user.osmdlc)}</CTableDataCell>
+                    </CTableRow>
+                  )
+                })}
                 <CTableRow>
-                  <CTableHeaderCell scope="row">1</CTableHeaderCell>
-                  <CTableDataCell>Mark</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
-                  <CTableDataCell>@mdo</CTableDataCell>
-                </CTableRow>
-                <CTableRow>
-                  <CTableHeaderCell scope="row">2</CTableHeaderCell>
-                  <CTableDataCell>Jacob</CTableDataCell>
-                  <CTableDataCell>Thornton</CTableDataCell>
-                  <CTableDataCell>@fat</CTableDataCell>
-                </CTableRow>
-                <CTableRow>
-                  <CTableHeaderCell scope="row"></CTableHeaderCell>
-                  <CTableDataCell colSpan={2}>
-                    <strong>Total</strong>
-                  </CTableDataCell>
-                  <CTableDataCell>@twitter</CTableDataCell>
+                  <CTableHeaderCell colSpan="6" className="text-end">
+                    Total
+                  </CTableHeaderCell>
+                  <CTableDataCell>{formatToRupiah(totalNominal)}</CTableDataCell>
                 </CTableRow>
               </CTableBody>
             </CTable>
