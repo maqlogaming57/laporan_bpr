@@ -28,6 +28,14 @@ const _nav = [
   },
   {
     component: CNavTitle,
+    name: 'Reference',
+  },
+  {
+    component: CNavItem,
+    name: 'Data Sekolah',
+  },
+  {
+    component: CNavTitle,
     name: 'Theme',
   },
   {

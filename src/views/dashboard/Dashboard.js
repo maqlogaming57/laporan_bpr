@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react'
 
 import {
   CAvatar,
-  CButton,
-  CButtonGroup,
   CCard,
   CCardBody,
   CCardFooter,
@@ -18,8 +16,6 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react'
-import { CChartLine } from '@coreui/react-chartjs'
-import { getStyle, hexToRgba } from '@coreui/utils'
 import CIcon from '@coreui/icons-react'
 import {
   cibCcAmex,
@@ -38,7 +34,6 @@ import {
   cifPl,
   cifUs,
   cibTwitter,
-  cilCloudDownload,
   cilPeople,
   cilUser,
   cilUserFemale,
@@ -56,8 +51,6 @@ import WidgetsDropdown from '../widgets/WidgetsDropdown'
 import axios from 'axios'
 
 const Dashboard = () => {
-  const random = (min, max) => Math.floor(Math.random() * (max - min + 1) + min)
-
   const progressExample = [
     { title: 'Visits', value: '29.703 Users', percent: 40, color: 'success' },
     { title: 'Unique', value: '24.093 Users', percent: 20, color: 'info' },
@@ -181,21 +174,27 @@ const Dashboard = () => {
   let i = 0
   const [data, setData] = useState([])
   const [totalNominal, setTotalNomial] = useState(0)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get('http://localhost:4000/colls')
         const responData = response.data.data
-        const calculatedTotal = data.reduce((acc, user) => acc + user.osmdlc, 0)
-        setTotalNomial(calculatedTotal)
         setData(responData)
+        const calculatedTotal = responData.reduce((acc, user) => acc + user.osmdlc, 0)
+        setTotalNomial(calculatedTotal)
+        setLoading(false)
       } catch (error) {
         console.error('Error fetching users:', error)
+        setLoading(false)
       }
     }
-    fetchData()
-  }, [data])
+
+    if (loading) {
+      fetchData()
+    }
+  }, [loading])
 
   const formatToRupiah = (amount) => {
     return new Intl.NumberFormat('id-ID', {
@@ -255,7 +254,7 @@ const Dashboard = () => {
         </CCol>
       </CRow>
       <CCard className="mb-4">
-        <CCardBody>
+        {/* <CCardBody>
           <CRow>
             <CCol sm={5}>
               <h4 id="traffic" className="card-title mb-0">
@@ -365,7 +364,7 @@ const Dashboard = () => {
               },
             }}
           />
-        </CCardBody>
+        </CCardBody> */}
         <CCardFooter>
           <CRow xs={{ cols: 1 }} md={{ cols: 5 }} className="text-center">
             {progressExample.map((item, index) => (

@@ -6,6 +6,9 @@ const Typography = React.lazy(() => import('./views/theme/typography/Typography'
 const Debiturs = React.lazy(() => import('./views/debitur/Debiturs'))
 const ViewDebiturs = React.lazy(() => import('./views/debitur/ViewDebiturs'))
 
+//Reference
+const DataSekolah = React.lazy(() => import('./views/sekolah/Sekolah'))
+
 // Base
 const Accordion = React.lazy(() => import('./views/base/accordion/Accordion'))
 const Breadcrumbs = React.lazy(() => import('./views/base/breadcrumbs/Breadcrumbs'))
@@ -55,6 +58,8 @@ const Widgets = React.lazy(() => import('./views/widgets/Widgets'))
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
+  { path: '/reference', name: 'reference', element: DataSekolah, extrac: true },
+  { path: '/reference/sekolah', name: 'Sekolah', element: DataSekolah },
   { path: '/theme', name: 'Theme', element: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', element: Colors },
   { path: '/theme/debiturs', name: 'Debiturs', element: Debiturs },
