@@ -14,49 +14,56 @@ import {
   CTableRow,
   CTableBody,
   CTableDataCell,
+  CFormSelect,
+  CPagination,
+  CPaginationItem,
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import * as icon from '@coreui/icons'
-import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 const Canvas = () => {
-  const [selectedUserData, setSelectedUserData] = useState([])
-  const [searchTerm, setSearchTerm] = useState('')
-  const navigate = useNavigate()
+  const [dataSekolah, setData] = useState([])
+  const [selectedKabKota, setSelectedKabKota] = useState('')
+  const [selectedJenjang, setSelectedJenjang] = useState('')
+  const [selectedPage, setSelectedPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
+  const [perPage] = useState(20)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.post('http://localhost:4000/customers/', {
-          nama: searchTerm,
-        })
-        const data = response.data.data
-
-        if (data && data.length > 0) {
-          console.log('Fetched users successfully:', data)
-          setSelectedUserData(data) // Perbarui selectedUserData dengan data yang diambil dari API
-        }
+        const response = await axios.get(
+          `https://api-sekolah-indonesia.vercel.app/sekolah/${selectedJenjang}?kab_kota=${selectedKabKota}&page=${selectedPage}&perPage=20`,
+        )
+        const responData = response.data
+        setData(responData.dataSekolah)
       } catch (error) {
-        console.error('Error fetching users:', error)
+        console.error('Error fetching data:', error)
+        setError('Error fetching data. Please try again later.')
+      } finally {
+        setLoading(false)
       }
     }
-
     fetchData()
-  }, [searchTerm])
+  }, [selectedKabKota, selectedPage, perPage, selectedJenjang])
 
-  const handleSearch = (e) => {
-    e.preventDefault()
-    // Panggil fungsi fetch data di sini untuk memperbarui data dengan pencarian
+  const handleSelectChange = (event) => {
+    setSelectedKabKota(event.target.value)
   }
-  const handleButtonClick = (user) => {
-    // Simpan data pengguna dalam state lokal
-    setSelectedUserData(user)
+  const handleSelectjenjang = (event) => {
+    setSelectedJenjang(event.target.value)
+  }
+  const handlenextpage = () => {
+    setSelectedPage((nextPage) => nextPage + 1)
+  }
+  const handleprevtpage = () => {
+    setSelectedPage((nextPage) => nextPage - 1)
+  }
 
-    // Navigasi ke halaman ViewDebiturs
-    navigate('../theme/debitur/ViewDebiturs', { state: { selectedUserData: user } })
-  }
-  let i = 0
+  let i = (selectedPage - 1) * perPage
 
   return (
     <CRow>
@@ -70,38 +77,66 @@ const Canvas = () => {
               Using the most basic table CoreUIs how <code>&lt;CTable&gt;</code>-based tables look
               in CoreUI.
             </p>
-            <CForm className="row g-3" onSubmit={handleSearch}>
+            <CForm className="row g-3">
               <CCol xs="auto">
-                <CFormInput
-                  type="text"
-                  placeholder="Nama / Nokontrak"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
+                <CFormSelect
+                  aria-label="Default select example"
+                  value={selectedKabKota}
+                  onChange={handleSelectChange}
+                >
+                  <option>Wilayah</option>
+                  <option value="036500">Kota Tegal</option>
+                  <option value="032800">Kab. Tegal</option>
+                  <option value="032900">Kab. Brebes</option>
+                  <option value="032700">Kab. Pemalang</option>
+                  <option value="030200">Kab. Banyumas</option>
+                  <option value="030700">Kab. Wonosobo</option>
+                  <option value="036400">Kota Pekalongan</option>
+                  <option value="032511">Kab. Batang</option>
+                  <option value="030500">Kab. Kebumen</option>
+                </CFormSelect>
+              </CCol>
+              <CCol xs="auto">
+                <CFormSelect
+                  aria-label="Default select example"
+                  value={selectedJenjang}
+                  onChange={handleSelectjenjang}
+                >
+                  <option>Jenjang</option>
+                  <option value="sd">SD</option>
+                  <option value="smp">SMP</option>
+                  <option value="sma">SMK</option>
+                  <option value="smk">SMA</option>
+                </CFormSelect>
               </CCol>
             </CForm>
+            <CPagination align="end" aria-label="Page navigation example" mg>
+              <CPaginationItem onClick={handleprevtpage} disabled={selectedPage === 1}>
+                Previous
+              </CPaginationItem>
+              <CPaginationItem onClick={handlenextpage}>Next</CPaginationItem>
+            </CPagination>
           </CCardBody>
+
           <CTable>
             <CTableHead color="dark">
               <CTableRow>
                 <CTableHeaderCell scope="col">#</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Nama</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Nokontrak</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Action</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Nama Sekolah</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Alamat</CTableHeaderCell>
+                <CTableHeaderCell scope="col">NPSN</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              {selectedUserData.map((user, index) => (
+              {dataSekolah.map((user, index) => (
                 <React.Fragment key={index}>
                   <CTableRow>
                     <CTableHeaderCell scope="row">{++i}</CTableHeaderCell>
-                    <CTableDataCell>{user.nama}</CTableDataCell>
-                    <CTableDataCell>{user.nokontrak}</CTableDataCell>
+                    <CTableDataCell>{user.sekolah}</CTableDataCell>
                     <CTableDataCell>
-                      <CButton color="dark" onClick={() => handleButtonClick(user)}>
-                        <CIcon icon={icon.cilFolder} size="s" />
-                      </CButton>
+                      {user.alamat_jalan} {user.kecamatan} {user.kabupaten_kota}
                     </CTableDataCell>
+                    <CTableDataCell>{user.npsn}</CTableDataCell>
                   </CTableRow>
                 </React.Fragment>
               ))}
