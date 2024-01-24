@@ -217,7 +217,7 @@ const Dashboard = () => {
               <strong>Nasabah</strong> <small>COLL 2</small>
             </CCardHeader>
             <CTable small striped hover>
-              <CTableHead>
+              <CTableHead color="dark">
                 <CTableRow>
                   <CTableHeaderCell scope="col">#</CTableHeaderCell>
                   <CTableHeaderCell scope="col">Nama</CTableHeaderCell>

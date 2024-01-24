@@ -28,14 +28,6 @@ const _nav = [
   },
   {
     component: CNavTitle,
-    name: 'Reference',
-  },
-  {
-    component: CNavItem,
-    name: 'Data Sekolah',
-  },
-  {
-    component: CNavTitle,
     name: 'Theme',
   },
   {
@@ -54,6 +46,16 @@ const _nav = [
     component: CNavItem,
     name: 'Informasi Debitur',
     to: '/theme/debiturs',
+    icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavTitle,
+    name: 'Reference',
+  },
+  {
+    component: CNavItem,
+    name: 'Data Sekolah',
+    to: '/references/canvas',
     icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
   },
   {

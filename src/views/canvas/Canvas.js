@@ -20,7 +20,7 @@ import * as icon from '@coreui/icons'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
-const Debiturs = () => {
+const Canvas = () => {
   const [selectedUserData, setSelectedUserData] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
   const navigate = useNavigate()
@@ -113,4 +113,4 @@ const Debiturs = () => {
   )
 }
 
-export default Debiturs
+export default Canvas
