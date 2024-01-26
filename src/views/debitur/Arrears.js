@@ -20,12 +20,12 @@ import CIcon from '@coreui/icons-react'
 import * as icon from '@coreui/icons'
 import axios from 'axios'
 
-const Canvas = () => {
+const Arrears = () => {
   const [dataSekolah, setData] = useState([])
   const [selectedKabKota, setSelectedKabKota] = useState('')
   const [selectedJenjang, setSelectedJenjang] = useState('')
   const [selectedPage, setSelectedPage] = useState(1)
-  //const [totalPages, setTotalPages] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
   const [perPage] = useState(20)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -146,4 +146,4 @@ const Canvas = () => {
   )
 }
 
-export default Canvas
+export default Arrears

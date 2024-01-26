@@ -59,6 +59,12 @@ const _nav = [
     icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
   },
   {
+    component: CNavItem,
+    name: 'Tunggakan Harian',
+    to: '/references/Arrears',
+    icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
+  },
+  {
     component: CNavTitle,
     name: 'Components',
   },
