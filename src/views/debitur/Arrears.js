@@ -15,6 +15,7 @@ import {
   CFormSelect,
   CPagination,
   CPaginationItem,
+  CFormInput,
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import * as icon from '@coreui/icons'
@@ -22,22 +23,23 @@ import axios from 'axios'
 
 const Arrears = () => {
   const [dataSekolah, setData] = useState([])
-  const [selectedKabKota, setSelectedKabKota] = useState('')
-  const [selectedJenjang, setSelectedJenjang] = useState('')
   const [selectedPage, setSelectedPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
   const [perPage] = useState(20)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [selectedDate, setSeletedDate] = useState('')
+  const [selectedKdprd, setSelectedKdprd] = useState('')
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `https://api-sekolah-indonesia.vercel.app/sekolah/${selectedJenjang}?kab_kota=${selectedKabKota}&page=${selectedPage}&perPage=15`,
+          `http://localhost:4000/customers/arrears?tanggal=${selectedDate}&kdprd=${selectedKdprd}`,
         )
-        const responData = response.data
-        setData(responData.dataSekolah)
+        console.log('API Response:', selectedDate)
+        const responData = response.data.data
+        setData(responData)
       } catch (error) {
         console.error('Error fetching data:', error)
         setError('Error fetching data. Please try again later.')
@@ -46,22 +48,32 @@ const Arrears = () => {
       }
     }
     fetchData()
-  }, [selectedKabKota, selectedPage, perPage, selectedJenjang])
+  }, [selectedDate, selectedPage, perPage, selectedKdprd])
 
-  const handleSelectChange = (event) => {
-    setSelectedKabKota(event.target.value)
-  }
-  const handleSelectjenjang = (event) => {
-    setSelectedJenjang(event.target.value)
-  }
   const handlenextpage = () => {
     setSelectedPage((nextPage) => nextPage + 1)
   }
   const handleprevtpage = () => {
     setSelectedPage((nextPage) => nextPage - 1)
   }
+  const handleDateChange = (event) => {
+    const selectedDate = event.target.value
+
+    const formattedDate = new Date(selectedDate).toISOString().slice(0, 10).replace(/-/g, '')
+    setSeletedDate(formattedDate)
+  }
 
   let i = (selectedPage - 1) * perPage
+  const formatToRupiah = (amount) => {
+    return new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    })
+      .format(amount)
+      .replace('Rp', '')
+  }
 
   return (
     <CRow>
@@ -77,52 +89,63 @@ const Arrears = () => {
             </p>
             <CForm className="row g-3">
               <CCol xs="auto">
+                <CFormInput type="date" onChange={handleDateChange} />
+              </CCol>
+              {/* <CCol xs="auto">
                 <CFormSelect
                   aria-label="Default select example"
-                  value={selectedKabKota}
-                  onChange={handleSelectChange}
+                  value={selectedKdprd}
+                  onChange={(e) => setSelectedKdprd(e.target.value)}
                 >
-                  <option>Wilayah</option>
-                  <option value="036500">Kota Tegal</option>
-                  <option value="032800">Kab. Tegal</option>
-                  <option value="032900">Kab. Brebes</option>
-                  <option value="032700">Kab. Pemalang</option>
-                  <option value="030200">Kab. Banyumas</option>
-                  <option value="030700">Kab. Wonosobo</option>
-                  <option value="036400">Kota Pekalongan</option>
-                  <option value="032511">Kab. Batang</option>
-                  <option value="030500">Kab. Kebumen</option>
+                  <option>Kdprd</option>
+                  <option value="43">43</option>
+                  <option value="28">28</option>
+                  <option value="27">27</option>
+                  <option value="12">12</option>
+                  <option value="50">50</option>
+                  <option value="21">21</option>
+                  <option value="29">29</option>
+                  <option value="53">53</option>
+                  <option value="22">22</option>
+                  <option value="60">60</option>
+                  <option value="16">16</option>
+                  <option value="41">41</option>
+                  <option value="11">11</option>
+                  <option value="23">23</option>
+                  <option value="13">13</option>
+                  <option value="42">42</option>
+                  <option value="44">44</option>
+                  <option value="55">55</option>
+                  <option value="24">24</option>
+                  <option value="26">26</option>
+                  <option value="54">54</option>
+                  <option value="25">25</option>
+                  <option value="40">40</option>
+                  <option value="15">15</option>
+                  <option value="20">20</option>
+                  <option value="30">30</option>
                 </CFormSelect>
-              </CCol>
-              <CCol xs="auto">
-                <CFormSelect
-                  aria-label="Default select example"
-                  value={selectedJenjang}
-                  onChange={handleSelectjenjang}
-                >
-                  <option>Jenjang</option>
-                  <option value="sd">SD</option>
-                  <option value="smp">SMP</option>
-                  <option value="sma">SMK</option>
-                  <option value="smk">SMA</option>
-                </CFormSelect>
-              </CCol>
+              </CCol> */}
             </CForm>
-            <CPagination align="end" aria-label="Page navigation example" mg>
+            {/* <CPagination align="end" aria-label="Page navigation example" mg={true}>
               <CPaginationItem onClick={handleprevtpage} disabled={selectedPage === 1}>
                 Previous
               </CPaginationItem>
               <CPaginationItem onClick={handlenextpage}>Next</CPaginationItem>
-            </CPagination>
+            </CPagination> */}
           </CCardBody>
 
-          <CTable>
+          <CTable responsive>
             <CTableHead color="dark">
               <CTableRow>
                 <CTableHeaderCell scope="col">#</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Nama Sekolah</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Nokontrak</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Nama</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Angsuran</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Alamat</CTableHeaderCell>
-                <CTableHeaderCell scope="col">NPSN</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Kdprd</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Hari</CTableHeaderCell>
+                <CTableHeaderCell scope="col">HP</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
@@ -130,11 +153,13 @@ const Arrears = () => {
                 <React.Fragment key={index}>
                   <CTableRow>
                     <CTableHeaderCell scope="row">{++i}</CTableHeaderCell>
-                    <CTableDataCell>{user.sekolah}</CTableDataCell>
-                    <CTableDataCell>
-                      {user.alamat_jalan} {user.kecamatan} {user.kabupaten_kota}
-                    </CTableDataCell>
-                    <CTableDataCell>{user.npsn}</CTableDataCell>
+                    <CTableDataCell>{user.nokontrak}</CTableDataCell>
+                    <CTableDataCell>{user.nm}</CTableDataCell>
+                    <CTableDataCell>{formatToRupiah(user.angsuran)}</CTableDataCell>
+                    <CTableDataCell>{user.alamat}</CTableDataCell>
+                    <CTableDataCell>{user.kdprd}</CTableDataCell>
+                    <CTableDataCell>{user.hari}</CTableDataCell>
+                    <CTableDataCell>{user.hp}</CTableDataCell>
                   </CTableRow>
                 </React.Fragment>
               ))}

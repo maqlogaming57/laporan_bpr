@@ -30,7 +30,11 @@ const ViewDebiturs = () => {
     return new Intl.NumberFormat('id-ID', {
       style: 'currency',
       currency: 'IDR',
-    }).format(amount)
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    })
+      .format(amount)
+      .replace('Rp', '')
   }
 
   return (
@@ -51,7 +55,7 @@ const ViewDebiturs = () => {
               <CTableRow>
                 <CTableHeaderCell scope="col">Alamat</CTableHeaderCell>
                 <CTableDataCell>
-                  {state.selectedUserData.alamat} KEL. {state.selectedUserData.kelurahan} KEC.{' '}
+                  {state.selectedUserData.alamat} KEL. {state.selectedUserData.kelurahan} KEC.
                   {state.selectedUserData.kecamatan} KAB./KOTA. {state.selectedUserData.kota}
                 </CTableDataCell>
               </CTableRow>
@@ -64,19 +68,33 @@ const ViewDebiturs = () => {
             </CTableHead>
             <CTableHead>
               <CTableRow>
-                <CTableHeaderCell scope="col">Total Tagihan</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Tempat Bekerja</CTableHeaderCell>
+                <CTableDataCell>
+                  {state.selectedUserData.namapt} {state.selectedUserData.kotapt}
+                </CTableDataCell>
+              </CTableRow>
+            </CTableHead>
+            <CTableHead>
+              <CTableRow>
+                <CTableHeaderCell scope="col">Alamat PT</CTableHeaderCell>
+                <CTableDataCell>{state.selectedUserData.alamatpt}</CTableDataCell>
+              </CTableRow>
+            </CTableHead>
+            <CTableHead>
+              <CTableRow>
+                <CTableHeaderCell scope="col">Plafon</CTableHeaderCell>
                 <CTableDataCell>{formatToRupiah(state.selectedUserData.tghttl)}</CTableDataCell>
               </CTableRow>
             </CTableHead>
             <CTableHead>
               <CTableRow>
-                <CTableHeaderCell scope="col">Tagihan</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Angsuran</CTableHeaderCell>
                 <CTableDataCell>{formatToRupiah(state.selectedUserData.angsttl)}</CTableDataCell>
               </CTableRow>
             </CTableHead>
             <CTableHead>
               <CTableRow>
-                <CTableHeaderCell scope="col">Sisa Tagihan</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Sisa Angsuran</CTableHeaderCell>
                 <CTableDataCell>
                   {formatToRupiah(state.selectedUserData.sisa_angsuran)}
                 </CTableDataCell>
