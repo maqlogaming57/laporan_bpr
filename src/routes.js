@@ -9,6 +9,7 @@ const ViewDebiturs = React.lazy(() => import('./views/debitur/ViewDebiturs'))
 //Reference
 const Canvas = React.lazy(() => import('./views/canvas/Canvas'))
 const Arrears = React.lazy(() => import('./views/debitur/Arrears'))
+const Realisasi = React.lazy(() => import('./views/debitur/Realisasi'))
 
 // Base
 const Accordion = React.lazy(() => import('./views/base/accordion/Accordion'))
@@ -62,6 +63,7 @@ const routes = [
   { path: '/reference', name: 'Reference', element: Canvas, extrac: true },
   { path: '/references/canvas', name: 'Canvas', element: Canvas },
   { path: '/references/arrears', name: 'Arrears', element: Arrears },
+  { path: '/references/relisasi', name: 'Realisasi', element: Realisasi },
   { path: '/theme', name: 'Theme', element: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', element: Colors },
   { path: '/theme/debiturs', name: 'Debiturs', element: Debiturs },

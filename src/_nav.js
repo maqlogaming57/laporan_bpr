@@ -28,6 +28,28 @@ const _nav = [
   },
   {
     component: CNavTitle,
+    name: 'Reference',
+  },
+  {
+    component: CNavItem,
+    name: 'Data Sekolah',
+    to: '/references/canvas',
+    icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Tunggakan Harian',
+    to: '/references/Arrears',
+    icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Realisasi Ao',
+    to: '/references/relisasi',
+    icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavTitle,
     name: 'Theme',
   },
   {
@@ -46,22 +68,6 @@ const _nav = [
     component: CNavItem,
     name: 'Informasi Debitur',
     to: '/theme/debiturs',
-    icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
-  },
-  {
-    component: CNavTitle,
-    name: 'Reference',
-  },
-  {
-    component: CNavItem,
-    name: 'Data Sekolah',
-    to: '/references/canvas',
-    icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
-  },
-  {
-    component: CNavItem,
-    name: 'Tunggakan Harian',
-    to: '/references/Arrears',
     icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
   },
   {
