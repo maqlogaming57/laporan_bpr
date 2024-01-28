@@ -23,11 +23,21 @@ const WidgetsDropdown = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/customers/os')
-        const responData = response.data.data
-        setData(responData)
+        const token = localStorage.getItem('token')
+
+        // Pastikan token ada sebelum membuat permintaan
+        if (token) {
+          const response = await axios.get('http://localhost:4000/customers/os', {
+            headers: {
+              Authorization: `${token}`,
+              'Content-Type': 'application/json',
+            },
+          })
+          const responData = response.data.data
+          setData(responData)
+        }
       } catch (error) {
-        console.error('Error fetching users:', error)
+        console.error('Error fetching data:', error)
       }
     }
     const fetchDataB = async () => {
