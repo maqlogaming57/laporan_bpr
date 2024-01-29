@@ -12,6 +12,7 @@ import {
   cilPuzzle,
   cilSpeedometer,
   cilStar,
+  cilGroup,
 } from '@coreui/icons'
 import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
 
@@ -68,7 +69,7 @@ const _nav = [
     component: CNavItem,
     name: 'Informasi Debitur',
     to: '/theme/debiturs',
-    icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilGroup} customClassName="nav-icon" />,
   },
   {
     component: CNavTitle,
