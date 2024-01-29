@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { Navigate } from 'react-router'
 import {
   CAvatar,
   CCard,
@@ -51,13 +50,6 @@ import WidgetsDropdown from '../widgets/WidgetsDropdown'
 import axios from 'axios'
 
 const Dashboard = () => {
-  const isLoggedIn = localStorage.getItem('token') !== null
-  useEffect(() => {
-    if (!isLoggedIn) {
-      window.location.href = '/login'
-    }
-  }, [isLoggedIn])
-
   const progressExample = [
     { title: 'Visits', value: '29.703 Users', percent: 40, color: 'success' },
     { title: 'Unique', value: '24.093 Users', percent: 20, color: 'info' },

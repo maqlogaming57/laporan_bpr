@@ -1,5 +1,4 @@
 import React from 'react'
-import { useNavigate } from 'react-router'
 import {
   CAvatar,
   CBadge,
@@ -26,15 +25,13 @@ import CIcon from '@coreui/icons-react'
 import avatar8 from './../../assets/images/avatars/8.jpg'
 
 const AppHeaderDropdown = () => {
-  const navigate = useNavigate() // Ganti useHistory menjadi useNavigate
-
   const handleLogout = () => {
     // Tambahkan logika logout di sini
     // Contoh: Menghapus token dari localStorage
     localStorage.removeItem('token')
 
     // Arahkan pengguna ke halaman login
-    navigate('/login')
+    window.location.href = '/login'
   }
   return (
     <CDropdown variant="nav-item">

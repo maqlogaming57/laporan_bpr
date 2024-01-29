@@ -12,9 +12,6 @@ import {
   CTableRow,
   CTableBody,
   CTableDataCell,
-  CFormSelect,
-  CPagination,
-  CPaginationItem,
   CFormInput,
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
@@ -24,7 +21,6 @@ import axios from 'axios'
 const Arrears = () => {
   const [dataSekolah, setData] = useState([])
   const [selectedPage, setSelectedPage] = useState(1)
-  const [totalPages, setTotalPages] = useState(1)
   const [perPage] = useState(20)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -50,12 +46,6 @@ const Arrears = () => {
     fetchData()
   }, [selectedDate, selectedPage, perPage, selectedKdprd])
 
-  const handlenextpage = () => {
-    setSelectedPage((nextPage) => nextPage + 1)
-  }
-  const handleprevtpage = () => {
-    setSelectedPage((nextPage) => nextPage - 1)
-  }
   const handleDateChange = (event) => {
     const selectedDate = event.target.value
 

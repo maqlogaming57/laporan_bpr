@@ -27,6 +27,7 @@ const Realisasi = () => {
   const [selectedDateStart, setSeletedDateStart] = useState('')
   const [selectedDateEnd, setSeletedDateEnd] = useState('')
   const [totalNominal, setTotalNomial] = useState(0)
+  const [totalNoa, setTotalNoa] = useState(0)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,6 +49,8 @@ const Realisasi = () => {
           setData(responData)
           const calculatedTotal = responData.reduce((acc, user) => acc + user.pencairan, 0)
           setTotalNomial(calculatedTotal)
+          const calculatedNoa = responData.reduce((acc, user) => acc + user.noa, 0)
+          setTotalNoa(calculatedNoa)
           setLoading(false)
         }
       } catch (error) {
@@ -151,6 +154,7 @@ const Realisasi = () => {
                 <CTableHeaderCell scope="col">#</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Kdaoh</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Realisasi</CTableHeaderCell>
+                <CTableHeaderCell scope="col">NOA</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Kdloc</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
@@ -161,6 +165,7 @@ const Realisasi = () => {
                     <CTableHeaderCell scope="row">{++i}</CTableHeaderCell>
                     <CTableDataCell>{user.kdaoh}</CTableDataCell>
                     <CTableDataCell>{formatToRupiah(user.pencairan)}</CTableDataCell>
+                    <CTableDataCell>{user.noa}</CTableDataCell>
                     <CTableDataCell>{user.kdloc}</CTableDataCell>
                   </CTableRow>
                 </React.Fragment>
@@ -170,7 +175,8 @@ const Realisasi = () => {
                   Total
                 </CTableHeaderCell>
                 <CTableDataCell>{formatToRupiah(totalNominal)}</CTableDataCell>
-                <CTableDataCell></CTableDataCell>
+                <CTableDataCell>{totalNoa}</CTableDataCell>
+                <CTableDataCell>00</CTableDataCell>
               </CTableRow>
             </CTableBody>
           </CTable>

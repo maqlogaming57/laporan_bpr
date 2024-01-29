@@ -1,4 +1,4 @@
-import React, { Component, Suspense } from 'react'
+import React, { Suspense } from 'react'
 import { HashRouter, Route, Routes, Navigate } from 'react-router-dom'
 import { jwtDecode } from 'jwt-decode'
 import './scss/style.scss'
@@ -18,8 +18,8 @@ const Register = React.lazy(() => import('./views/pages/register/Register'))
 const Page404 = React.lazy(() => import('./views/pages/page404/Page404'))
 const Page500 = React.lazy(() => import('./views/pages/page500/Page500'))
 
-class App extends Component {
-  isTokenExpired = () => {
+const App = () => {
+  const checkTokenExpired = () => {
     const token = localStorage.getItem('token')
 
     if (token) {
@@ -34,36 +34,27 @@ class App extends Component {
     return true
   }
 
-  logout = () => {
-    // Hapus token dari localStorage
-    localStorage.removeItem('token')
-    // Arahkan pengguna ke halaman login
-    return <Navigate to={Login} />
-  }
+  const isLoggedIn = localStorage.getItem('token') !== null
+  const isTokenExpired = checkTokenExpired()
 
-  render() {
-    const isLoggedIn = localStorage.getItem('token') !== null
-    const isTokenExpired = this.isTokenExpired()
-
-    return (
-      <HashRouter>
-        <Suspense fallback={loading}>
-          <Routes>
-            <Route
-              exact
-              path="/login"
-              element={isLoggedIn && !isTokenExpired ? <Navigate to="/" /> : <Login />}
-            />
-            {/* Sisipkan Route lain sesuai kebutuhan Anda */}
-            <Route
-              path="*"
-              element={isLoggedIn && !isTokenExpired ? <DefaultLayout /> : <Navigate to="/login" />}
-            />
-          </Routes>
-        </Suspense>
-      </HashRouter>
-    )
-  }
+  return (
+    <HashRouter>
+      <Suspense fallback={loading}>
+        <Routes>
+          <Route
+            exact
+            path="/login"
+            element={isLoggedIn && !isTokenExpired ? <Navigate to="/" /> : <Login />}
+          />
+          {/* Sisipkan Route lain sesuai kebutuhan Anda */}
+          <Route
+            path="*"
+            element={isLoggedIn && !isTokenExpired ? <DefaultLayout /> : <Navigate to="/login" />}
+          />
+        </Routes>
+      </Suspense>
+    </HashRouter>
+  )
 }
 
 export default App

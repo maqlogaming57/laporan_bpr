@@ -44,10 +44,22 @@ const _nav = [
     icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
   },
   {
-    component: CNavItem,
-    name: 'Realisasi Ao',
-    to: '/references/relisasi',
+    component: CNavGroup,
+    name: 'Realisasi',
+    to: '/references/',
     icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Account Officer',
+        to: '/references/relisasi',
+      },
+      {
+        component: CNavItem,
+        name: 'Produk',
+        to: '/references/produk',
+      },
+    ],
   },
   {
     component: CNavTitle,
