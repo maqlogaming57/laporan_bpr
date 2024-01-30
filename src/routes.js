@@ -5,6 +5,7 @@ const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
 const Typography = React.lazy(() => import('./views/theme/typography/Typography'))
 const Debiturs = React.lazy(() => import('./views/debitur/Debiturs'))
 const ViewDebiturs = React.lazy(() => import('./views/debitur/ViewDebiturs'))
+const Kolekbilitas = React.lazy(() => import('./views/debitur/kolekbilitas/Kolekbilitas'))
 
 //Reference
 const Canvas = React.lazy(() => import('./views/canvas/Canvas'))
@@ -62,11 +63,12 @@ const routes = [
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
   { path: '/reference', name: 'Reference', element: Canvas, extrac: true },
   { path: '/references/canvas', name: 'Canvas', element: Canvas },
+  { path: '/reference/debiturs', name: 'Debiturs', element: Debiturs },
   { path: '/references/arrears', name: 'Arrears', element: Arrears },
+  { path: '/references/kolekbilitas', name: 'Kolekbilitas', element: Kolekbilitas },
   { path: '/references/relisasi', name: 'Realisasi', element: Realisasi },
   { path: '/theme', name: 'Theme', element: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', element: Colors },
-  { path: '/theme/debiturs', name: 'Debiturs', element: Debiturs },
   { path: '/theme/debitur/ViewDebiturs', name: 'ViewDebiturs', element: ViewDebiturs },
   { path: '/theme/typography', name: 'Typography', element: Typography },
   { path: '/base', name: 'Base', element: Cards, exact: true },

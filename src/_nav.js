@@ -44,8 +44,20 @@ const _nav = [
     icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
   },
   {
+    component: CNavItem,
+    name: 'Kolekbilitas',
+    to: '/references/kolekbilitas',
+    icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Informasi Debitur',
+    to: '/reference/debiturs',
+    icon: <CIcon icon={cilGroup} customClassName="nav-icon" />,
+  },
+  {
     component: CNavGroup,
-    name: 'Realisasi',
+    name: 'Droping',
     to: '/references/',
     icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
     items: [
@@ -76,12 +88,6 @@ const _nav = [
     name: 'Typography',
     to: '/theme/typography',
     icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
-  },
-  {
-    component: CNavItem,
-    name: 'Informasi Debitur',
-    to: '/theme/debiturs',
-    icon: <CIcon icon={cilGroup} customClassName="nav-icon" />,
   },
   {
     component: CNavTitle,

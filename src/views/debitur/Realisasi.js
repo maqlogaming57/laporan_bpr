@@ -47,9 +47,7 @@ const Realisasi = () => {
           console.log('API Response:', selectedDateStart)
           const responData = response.data.data
           setData(responData)
-          const calculatedTotal = responData.reduce((acc, user) => acc + user.pencairan, 0)
-          setTotalNomial(calculatedTotal)
-          const calculatedNoa = responData.reduce((acc, user) => acc + user.noa, 0)
+          const calculatedNoa = responData.reduce((acc, user) => acc + user.nominalrp, 0)
           setTotalNoa(calculatedNoa)
           setLoading(false)
         }
@@ -153,8 +151,9 @@ const Realisasi = () => {
               <CTableRow>
                 <CTableHeaderCell scope="col">#</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Kdaoh</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Nama</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Realisasi</CTableHeaderCell>
-                <CTableHeaderCell scope="col">NOA</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Kdprd</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Kdloc</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
@@ -164,19 +163,18 @@ const Realisasi = () => {
                   <CTableRow>
                     <CTableHeaderCell scope="row">{++i}</CTableHeaderCell>
                     <CTableDataCell>{user.kdaoh}</CTableDataCell>
-                    <CTableDataCell>{formatToRupiah(user.pencairan)}</CTableDataCell>
+                    <CTableDataCell>{user.nama}</CTableDataCell>
+                    <CTableDataCell>{formatToRupiah(user.nominalrp)}</CTableDataCell>
                     <CTableDataCell>{user.noa}</CTableDataCell>
                     <CTableDataCell>{user.kdloc}</CTableDataCell>
                   </CTableRow>
                 </React.Fragment>
               ))}
               <CTableRow>
-                <CTableHeaderCell colSpan="2" className="text-end">
+                <CTableHeaderCell colSpan="3" className="text-end">
                   Total
                 </CTableHeaderCell>
-                <CTableDataCell>{formatToRupiah(totalNominal)}</CTableDataCell>
-                <CTableDataCell>{totalNoa}</CTableDataCell>
-                <CTableDataCell>00</CTableDataCell>
+                <CTableDataCell>{formatToRupiah(totalNoa)}</CTableDataCell>
               </CTableRow>
             </CTableBody>
           </CTable>
