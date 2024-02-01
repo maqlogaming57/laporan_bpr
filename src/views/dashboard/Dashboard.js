@@ -48,6 +48,7 @@ import avatar6 from 'src/assets/images/avatars/6.jpg'
 import WidgetsBrand from '../widgets/WidgetsBrand'
 import WidgetsDropdown from '../widgets/WidgetsDropdown'
 import axios from 'axios'
+import Tables from '../base/tables/Tables'
 
 const Dashboard = () => {
   const progressExample = [
@@ -210,7 +211,7 @@ const Dashboard = () => {
     <>
       <WidgetsDropdown />
       <CRow>
-        <CCol xs={12}>
+        <CCol xs={12} sm={7} lg={6}>
           <CCard className="mb-4">
             <CCardHeader>
               <strong>Nasabah</strong> <small>COLL 2</small>
@@ -220,9 +221,6 @@ const Dashboard = () => {
                 <CTableRow>
                   <CTableHeaderCell scope="col">#</CTableHeaderCell>
                   <CTableHeaderCell scope="col">Nama</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Nokontrak</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Kdaoh</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Kdprd</CTableHeaderCell>
                   <CTableHeaderCell scope="col">Hari</CTableHeaderCell>
                   <CTableHeaderCell scope="col">Osmdlc</CTableHeaderCell>
                 </CTableRow>
@@ -233,20 +231,54 @@ const Dashboard = () => {
                     <CTableRow key={index}>
                       <CTableHeaderCell scope="row">{++i}</CTableHeaderCell>
                       <CTableDataCell>{user.nama}</CTableDataCell>
-                      <CTableDataCell>{user.nokontrak}</CTableDataCell>
-                      <CTableDataCell>{user.kdaoh}</CTableDataCell>
-                      <CTableDataCell>{user.kdprd}</CTableDataCell>
                       <CTableDataCell>{user.haritgkmdl}</CTableDataCell>
                       <CTableDataCell>{formatToRupiah(user.osmdlc)}</CTableDataCell>
                     </CTableRow>
                   )
                 })}
                 <CTableRow>
-                  <CTableHeaderCell colSpan="6" className="text-end">
+                  <CTableHeaderCell colSpan="3" className="text-end">
                     Total
                   </CTableHeaderCell>
                   <CTableDataCell>{formatToRupiah(totalNominal)}</CTableDataCell>
                 </CTableRow>
+              </CTableBody>
+            </CTable>
+          </CCard>
+        </CCol>
+        <CCol xs={12} sm={7} lg={6}>
+          <CCard className="mb-4">
+            <CCardHeader>
+              <strong>NPF</strong>
+            </CCardHeader>
+            <CTable small striped hover>
+              <CTableHead color="dark">
+                <CTableRow>
+                  <CTableHeaderCell scope="col">#</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Coll</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Os</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">%</CTableHeaderCell>
+                </CTableRow>
+              </CTableHead>
+              <CTableBody>
+                <CTableRow>
+                  <CTableHeaderCell scope="row">{++i}</CTableHeaderCell>
+                  <CTableDataCell>1</CTableDataCell>
+                  <CTableDataCell>2</CTableDataCell>
+                  <CTableDataCell>3</CTableDataCell>
+                </CTableRow>
+                <CTableRow>
+                  <CTableHeaderCell scope="row">{++i}</CTableHeaderCell>
+                  <CTableDataCell>2</CTableDataCell>
+                  <CTableDataCell>2</CTableDataCell>
+                  <CTableDataCell>2</CTableDataCell>
+                </CTableRow>
+                {/* <CTableRow>
+                  <CTableHeaderCell colSpan="3" className="text-end">
+                    Total
+                  </CTableHeaderCell>
+                  <CTableDataCell>11</CTableDataCell>
+                </CTableRow> */}
               </CTableBody>
             </CTable>
           </CCard>
@@ -364,7 +396,7 @@ const Dashboard = () => {
             }}
           />
         </CCardBody> */}
-        <CCardFooter>
+        {/* <CCardFooter>
           <CRow xs={{ cols: 1 }} md={{ cols: 5 }} className="text-center">
             {progressExample.map((item, index) => (
               <CCol className="mb-sm-2 mb-0" key={index}>
@@ -376,7 +408,7 @@ const Dashboard = () => {
               </CCol>
             ))}
           </CRow>
-        </CCardFooter>
+        </CCardFooter> */}
       </CCard>
 
       <WidgetsBrand withCharts />
