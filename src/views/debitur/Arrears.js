@@ -25,13 +25,12 @@ const Arrears = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [selectedDate, setSeletedDate] = useState('')
-  const [selectedKdprd, setSelectedKdprd] = useState('')
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:4000/customers/arrears?tanggal=${selectedDate}&kdprd=${selectedKdprd}`,
+          `http://localhost:4000/customers/arrears?tanggal=${selectedDate}`,
         )
         console.log('API Response:', selectedDate)
         const responData = response.data.data
@@ -44,7 +43,7 @@ const Arrears = () => {
       }
     }
     fetchData()
-  }, [selectedDate, selectedPage, perPage, selectedKdprd])
+  }, [selectedDate, selectedPage, perPage])
 
   const handleDateChange = (event) => {
     const selectedDate = event.target.value
@@ -63,6 +62,7 @@ const Arrears = () => {
     })
       .format(amount)
       .replace('Rp', '')
+      .trim()
   }
 
   return (
@@ -81,41 +81,6 @@ const Arrears = () => {
               <CCol xs="auto">
                 <CFormInput type="date" onChange={handleDateChange} />
               </CCol>
-              {/* <CCol xs="auto">
-                <CFormSelect
-                  aria-label="Default select example"
-                  value={selectedKdprd}
-                  onChange={(e) => setSelectedKdprd(e.target.value)}
-                >
-                  <option>Kdprd</option>
-                  <option value="43">43</option>
-                  <option value="28">28</option>
-                  <option value="27">27</option>
-                  <option value="12">12</option>
-                  <option value="50">50</option>
-                  <option value="21">21</option>
-                  <option value="29">29</option>
-                  <option value="53">53</option>
-                  <option value="22">22</option>
-                  <option value="60">60</option>
-                  <option value="16">16</option>
-                  <option value="41">41</option>
-                  <option value="11">11</option>
-                  <option value="23">23</option>
-                  <option value="13">13</option>
-                  <option value="42">42</option>
-                  <option value="44">44</option>
-                  <option value="55">55</option>
-                  <option value="24">24</option>
-                  <option value="26">26</option>
-                  <option value="54">54</option>
-                  <option value="25">25</option>
-                  <option value="40">40</option>
-                  <option value="15">15</option>
-                  <option value="20">20</option>
-                  <option value="30">30</option>
-                </CFormSelect>
-              </CCol> */}
             </CForm>
             {/* <CPagination align="end" aria-label="Page navigation example" mg={true}>
               <CPaginationItem onClick={handleprevtpage} disabled={selectedPage === 1}>

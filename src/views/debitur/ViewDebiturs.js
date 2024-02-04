@@ -35,6 +35,7 @@ const ViewDebiturs = () => {
     })
       .format(amount)
       .replace('Rp', '')
+      .trim()
   }
 
   return (

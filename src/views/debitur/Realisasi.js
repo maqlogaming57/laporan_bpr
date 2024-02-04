@@ -26,7 +26,6 @@ const Realisasi = () => {
   const [error, setError] = useState(null)
   const [selectedDateStart, setSeletedDateStart] = useState('')
   const [selectedDateEnd, setSeletedDateEnd] = useState('')
-  const [totalNominal, setTotalNomial] = useState(0)
   const [totalNoa, setTotalNoa] = useState(0)
 
   useEffect(() => {
@@ -84,6 +83,7 @@ const Realisasi = () => {
     })
       .format(amount)
       .replace('Rp', '')
+      .trim()
   }
 
   return (

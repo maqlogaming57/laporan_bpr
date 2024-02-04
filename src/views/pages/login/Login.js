@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
 import {
+  CAlert,
   CButton,
   CCard,
   CCardBody,
@@ -18,8 +18,10 @@ import { cilLockLocked, cilUser } from '@coreui/icons'
 import axios from 'axios'
 
 const Login = () => {
-  const [email, setEmail] = useState()
-  const [password, setPassword] = useState()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [loginError, setLoginError] = useState(false)
+  const isFormValid = email.trim() !== '' && password.trim() !== ''
 
   const handlelogin = async () => {
     try {
@@ -29,31 +31,36 @@ const Login = () => {
       })
 
       const token = response.data.token
-      console.log('toked:', token)
 
       localStorage.setItem('token', token)
       // navigate('/dashboard')
       window.location.href = '/dashboard'
     } catch (error) {
-      console.error('Login failed')
+      setLoginError(true)
     }
   }
   return (
     <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
       <CContainer>
         <CRow className="justify-content-center">
-          <CCol md={8}>
+          <CCol md={6}>
             <CCardGroup>
-              <CCard className="p-4">
+              <CCard className="p-5">
                 <CCardBody>
                   <CForm>
                     <h1>Login</h1>
                     <p className="text-medium-emphasis">Sign In to your account</p>
+                    {loginError && (
+                      <CAlert color="danger" closeButton>
+                        Login failed. Please check your email and password.
+                      </CAlert>
+                    )}
                     <CInputGroup className="mb-3">
                       <CInputGroupText>
                         <CIcon icon={cilUser} />
                       </CInputGroupText>
                       <CFormInput
+                        required
                         placeholder="email"
                         autoComplete="email"
                         value={email}
@@ -65,42 +72,28 @@ const Login = () => {
                         <CIcon icon={cilLockLocked} />
                       </CInputGroupText>
                       <CFormInput
+                        required
                         type="password"
+                        autoComplete="password"
                         placeholder="Password"
-                        autoComplete="current-password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                       />
                     </CInputGroup>
                     <CRow>
                       <CCol xs={6}>
-                        <CButton color="primary" className="px-4" onClick={handlelogin}>
+                        <CButton
+                          color="primary"
+                          className="px-4"
+                          disabled={!isFormValid}
+                          onClick={handlelogin}
+                        >
                           Login
                         </CButton>
                       </CCol>
-                      <CCol xs={6} className="text-right">
-                        <CButton color="link" className="px-0">
-                          Forgot password?
-                        </CButton>
-                      </CCol>
+                      <CCol xs={6} className="text-right"></CCol>
                     </CRow>
                   </CForm>
-                </CCardBody>
-              </CCard>
-              <CCard className="text-white bg-primary py-5" style={{ width: '44%' }}>
-                <CCardBody className="text-center">
-                  <div>
-                    <h2>Sign up</h2>
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                      tempor incididunt ut labore et dolore magna aliqua.
-                    </p>
-                    <Link to="/register">
-                      <CButton color="primary" className="mt-3" active tabIndex={-1}>
-                        Register Now!
-                      </CButton>
-                    </Link>
-                  </div>
                 </CCardBody>
               </CCard>
             </CCardGroup>

@@ -3,7 +3,6 @@ import {
   CAvatar,
   CCard,
   CCardBody,
-  CCardFooter,
   CCardHeader,
   CCol,
   CProgress,
@@ -48,16 +47,15 @@ import avatar6 from 'src/assets/images/avatars/6.jpg'
 import WidgetsBrand from '../widgets/WidgetsBrand'
 import WidgetsDropdown from '../widgets/WidgetsDropdown'
 import axios from 'axios'
-import Tables from '../base/tables/Tables'
 
 const Dashboard = () => {
-  const progressExample = [
-    { title: 'Visits', value: '29.703 Users', percent: 40, color: 'success' },
-    { title: 'Unique', value: '24.093 Users', percent: 20, color: 'info' },
-    { title: 'Pageviews', value: '78.706 Views', percent: 60, color: 'warning' },
-    { title: 'New Users', value: '22.123 Users', percent: 80, color: 'danger' },
-    { title: 'Bounce Rate', value: 'Average Rate', percent: 40.15, color: 'primary' },
-  ]
+  // const progressExample = [
+  //   { title: 'Visits', value: '29.703 Users', percent: 40, color: 'success' },
+  //   { title: 'Unique', value: '24.093 Users', percent: 20, color: 'info' },
+  //   { title: 'Pageviews', value: '78.706 Views', percent: 60, color: 'warning' },
+  //   { title: 'New Users', value: '22.123 Users', percent: 80, color: 'danger' },
+  //   { title: 'Bounce Rate', value: 'Average Rate', percent: 40.15, color: 'primary' },
+  // ]
 
   const progressGroupExample1 = [
     { title: 'Monday', value1: 34, value2: 78 },
@@ -171,19 +169,40 @@ const Dashboard = () => {
       activity: 'Last week',
     },
   ]
-  let i = 0
+  let i = 1
   const [data, setData] = useState([])
   const [totalNominal, setTotalNomial] = useState(0)
   const [loading, setLoading] = useState(true)
+  const [dataNpf, setDataNpf] = useState([])
+  const [totalNpf, setTotalNpf] = useState(0)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/colls')
-        const responData = response.data.data
-        setData(responData)
-        const calculatedTotal = responData.reduce((acc, user) => acc + user.osmdlc, 0)
-        setTotalNomial(calculatedTotal)
+        const token = localStorage.getItem('token')
+
+        // Pastikan token ada sebelum membuat permintaan
+        if (token) {
+          const response = await axios.get('http://localhost:4000/customers/os', {
+            headers: {
+              Authorization: `${token}`,
+              'Content-Type': 'application/json',
+            },
+          })
+          const responData = response.data.data
+          setData(responData)
+          const calculatedTotal = responData.reduce((acc, user) => acc + user.totalos, 0)
+          setTotalNomial(calculatedTotal)
+        }
+
+        const responseNpf = await axios.get('http://localhost:4000/colls/npf')
+        const responDataNpf = responseNpf.data.data
+        setDataNpf(responDataNpf)
+        const calculatedNpf = responDataNpf.reduce(
+          (acc, user) => acc + user.col_3 + user.col_4 + user.col_5,
+          0,
+        )
+        setTotalNpf(calculatedNpf)
         setLoading(false)
       } catch (error) {
         console.error('Error fetching users:', error)
@@ -205,6 +224,7 @@ const Dashboard = () => {
     })
       .format(amount)
       .replace('Rp', '')
+      .trim()
   }
 
   return (
@@ -226,13 +246,16 @@ const Dashboard = () => {
                 </CTableRow>
               </CTableHead>
               <CTableBody>
-                {data.map((user, index) => {
+                {data.map((ost, index) => {
+                  // const osmdlcValue = ost.totalos
+                  // const col3Value = dataNpf[index]?.col_3 || 0
+                  const presentase = ((totalNpf / ost.totalos) * 100).toFixed(2).slice(0, 5)
                   return (
                     <CTableRow key={index}>
-                      <CTableHeaderCell scope="row">{++i}</CTableHeaderCell>
-                      <CTableDataCell>{user.nama}</CTableDataCell>
-                      <CTableDataCell>{user.haritgkmdl}</CTableDataCell>
-                      <CTableDataCell>{formatToRupiah(user.osmdlc)}</CTableDataCell>
+                      <CTableHeaderCell scope="row">{index + i}</CTableHeaderCell>
+                      <CTableDataCell>{ost.totalos}</CTableDataCell>
+                      <CTableDataCell>{ost.haritgkmdl}</CTableDataCell>
+                      <CTableDataCell>{presentase}%</CTableDataCell>
                     </CTableRow>
                   )
                 })}
@@ -261,24 +284,49 @@ const Dashboard = () => {
                 </CTableRow>
               </CTableHead>
               <CTableBody>
-                <CTableRow>
-                  <CTableHeaderCell scope="row">{++i}</CTableHeaderCell>
-                  <CTableDataCell>1</CTableDataCell>
-                  <CTableDataCell>2</CTableDataCell>
-                  <CTableDataCell>3</CTableDataCell>
-                </CTableRow>
-                <CTableRow>
-                  <CTableHeaderCell scope="row">{++i}</CTableHeaderCell>
-                  <CTableDataCell>2</CTableDataCell>
-                  <CTableDataCell>2</CTableDataCell>
-                  <CTableDataCell>2</CTableDataCell>
-                </CTableRow>
-                {/* <CTableRow>
-                  <CTableHeaderCell colSpan="3" className="text-end">
-                    Total
-                  </CTableHeaderCell>
-                  <CTableDataCell>11</CTableDataCell>
-                </CTableRow> */}
+                {dataNpf.map((user, index) => {
+                  const col3Value = user.col_3
+                  const col4Value = user.col_4
+                  const col5Value = user.col_5
+
+                  return (
+                    <React.Fragment key={index}>
+                      <CTableRow>
+                        <CTableHeaderCell scope="row">{index + i}</CTableHeaderCell>
+                        <CTableDataCell>3</CTableDataCell>
+                        <CTableDataCell>{formatToRupiah(user.col_3)}</CTableDataCell>
+                        <CTableDataCell>
+                          {((col3Value / totalNominal) * 100).toFixed(2).slice(0, 4)}%
+                        </CTableDataCell>
+                      </CTableRow>
+                      <CTableRow>
+                        <CTableHeaderCell scope="row">{++i}</CTableHeaderCell>
+                        <CTableDataCell>4</CTableDataCell>
+                        <CTableDataCell>{formatToRupiah(user.col_4)}</CTableDataCell>
+                        <CTableDataCell>
+                          {((col4Value / totalNominal) * 100).toFixed(2).slice(0, 4)}%
+                        </CTableDataCell>
+                      </CTableRow>
+                      <CTableRow>
+                        <CTableHeaderCell scope="row">{++i}</CTableHeaderCell>
+                        <CTableDataCell>5</CTableDataCell>
+                        <CTableDataCell>{formatToRupiah(user.col_5)}</CTableDataCell>
+                        <CTableDataCell>
+                          {((col5Value / totalNominal) * 100).toFixed(2).slice(0, 4)}%
+                        </CTableDataCell>
+                      </CTableRow>
+                      <CTableRow>
+                        <CTableHeaderCell colSpan="2" className="text-end">
+                          Total
+                        </CTableHeaderCell>
+                        <CTableDataCell>{formatToRupiah(totalNpf)}</CTableDataCell>
+                        <CTableDataCell>
+                          {((totalNpf / totalNominal) * 100).toFixed(2).slice(0, 5)}%
+                        </CTableDataCell>
+                      </CTableRow>
+                    </React.Fragment>
+                  )
+                })}
               </CTableBody>
             </CTable>
           </CCard>

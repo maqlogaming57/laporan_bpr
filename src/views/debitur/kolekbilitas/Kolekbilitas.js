@@ -12,7 +12,6 @@ import {
   CTableRow,
   CTableBody,
   CTableDataCell,
-  CFormInput,
   CSpinner,
   CFormSelect,
 } from '@coreui/react'
@@ -58,6 +57,7 @@ const Kolekbilitas = () => {
     })
       .format(amount)
       .replace('Rp', '')
+      .trim()
   }
   let i = 0
   return (
