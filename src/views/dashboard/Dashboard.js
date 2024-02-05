@@ -183,7 +183,7 @@ const Dashboard = () => {
 
         // Pastikan token ada sebelum membuat permintaan
         if (token) {
-          const response = await axios.get('http://localhost:4000/customers/os', {
+          const response = await axios.get(`${process.env.REACT_APP_URL_API}/customers/os`, {
             headers: {
               Authorization: `${token}`,
               'Content-Type': 'application/json',
@@ -195,7 +195,7 @@ const Dashboard = () => {
           setTotalNomial(calculatedTotal)
         }
 
-        const responseNpf = await axios.get('http://localhost:4000/colls/npf')
+        const responseNpf = await axios.get(`${process.env.REACT_APP_URL_API}/colls/npf`)
         const responDataNpf = responseNpf.data.data
         setDataNpf(responDataNpf)
         const calculatedNpf = responDataNpf.reduce(

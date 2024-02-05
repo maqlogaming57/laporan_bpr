@@ -29,7 +29,9 @@ const Kolekbilitas = () => {
     const fetchData = async () => {
       try {
         console.log('Selected Coll:', selectedColl)
-        const response = await axios.get(`http://localhost:4000/colls?kdcoll=${selectedColl}`)
+        const response = await axios.get(
+          `${process.env.REACT_APP_URL_API}/colls?kdcoll=${selectedColl}`,
+        )
         const responData = response.data.data
         setData(responData)
         const calculatedTotal = responData.reduce((acc, user) => acc + user.osmdlc, 0)

@@ -28,7 +28,7 @@ const Debiturs = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.post('http://localhost:4000/customers/', {
+        const response = await axios.post(`${process.env.REACT_APP_URL_API}/customers/`, {
           nama: searchTerm,
         })
         const data = response.data.data

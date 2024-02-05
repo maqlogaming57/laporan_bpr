@@ -35,7 +35,7 @@ const Realisasi = () => {
 
         if (token) {
           const response = await axios.get(
-            `http://localhost:4000/customers/realisasi?datestart=${selectedDateStart}&dateend=${selectedDateEnd}`,
+            `${process.env.REACT_APP_URL_API}/customers/realisasi?datestart=${selectedDateStart}&dateend=${selectedDateEnd}`,
             {
               headers: {
                 Authorization: `${token}`,

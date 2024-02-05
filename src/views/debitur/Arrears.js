@@ -30,7 +30,7 @@ const Arrears = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:4000/customers/arrears?tanggal=${selectedDate}`,
+          `${process.env.REACT_APP_URL_API}/customers/arrears?tanggal=${selectedDate}`,
         )
         console.log('API Response:', selectedDate)
         const responData = response.data.data
