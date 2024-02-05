@@ -22,21 +22,31 @@ const Kolekbilitas = () => {
   const [totalNominal, setTotalNomial] = useState(0)
   const [loading, setLoading] = useState(true)
   const [selectedColl, setSeletedColl] = useState('')
+
   useEffect(() => {
     if (!selectedColl || selectedColl === '') {
       return
     }
+    const token = localStorage.getItem('token')
     const fetchData = async () => {
       try {
-        console.log('Selected Coll:', selectedColl)
-        const response = await axios.get(
-          `${process.env.REACT_APP_URL_API}/colls?kdcoll=${selectedColl}`,
-        )
-        const responData = response.data.data
-        setData(responData)
-        const calculatedTotal = responData.reduce((acc, user) => acc + user.osmdlc, 0)
-        setTotalNomial(calculatedTotal)
-        setLoading(false)
+        if (token) {
+          console.log('Selected Coll:', selectedColl)
+          const response = await axios.get(
+            `${process.env.REACT_APP_URL_API}/colls?kdcoll=${selectedColl}`,
+            {
+              headers: {
+                Authorization: `${token}`,
+                'Content-Type': 'application/json',
+              },
+            },
+          )
+          const responData = response.data.data
+          setData(responData)
+          const calculatedTotal = responData.reduce((acc, user) => acc + user.osmdlc, 0)
+          setTotalNomial(calculatedTotal)
+          setLoading(false)
+        }
       } catch (error) {
         console.error('Error fetching users:', error)
         setLoading(false)

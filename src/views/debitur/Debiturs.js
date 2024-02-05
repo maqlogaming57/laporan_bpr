@@ -26,16 +26,28 @@ const Debiturs = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
+    const token = localStorage.getItem('token')
     const fetchData = async () => {
       try {
-        const response = await axios.post(`${process.env.REACT_APP_URL_API}/customers/`, {
-          nama: searchTerm,
-        })
-        const data = response.data.data
+        if (token) {
+          const response = await axios.post(
+            `${process.env.REACT_APP_URL_API}/customers/`,
+            {
+              nama: searchTerm,
+            },
+            {
+              headers: {
+                Authorization: `${token}`,
+                'Content-Type': 'application/json',
+              },
+            },
+          )
+          const data = response.data.data
 
-        if (data && data.length > 0) {
-          console.log('Fetched users successfully:', data)
-          setSelectedUserData(data) // Perbarui selectedUserData dengan data yang diambil dari API
+          if (data && data.length > 0) {
+            console.log('Fetched users successfully:', data)
+            setSelectedUserData(data) // Perbarui selectedUserData dengan data yang diambil dari API
+          }
         }
       } catch (error) {
         console.error('Error fetching users:', error)

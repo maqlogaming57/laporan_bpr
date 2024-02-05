@@ -27,14 +27,23 @@ const Arrears = () => {
   const [selectedDate, setSeletedDate] = useState('')
 
   useEffect(() => {
+    const token = localStorage.getItem('token')
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `${process.env.REACT_APP_URL_API}/customers/arrears?tanggal=${selectedDate}`,
-        )
-        console.log('API Response:', selectedDate)
-        const responData = response.data.data
-        setData(responData)
+        if (token) {
+          const response = await axios.get(
+            `${process.env.REACT_APP_URL_API}/customers/arrears?tanggal=${selectedDate}`,
+            {
+              headers: {
+                Authorization: `${token}`,
+                'Content-Type': 'application/json',
+              },
+            },
+          )
+          console.log('API Response:', selectedDate)
+          const responData = response.data.data
+          setData(responData)
+        }
       } catch (error) {
         console.error('Error fetching data:', error)
         setError('Error fetching data. Please try again later.')

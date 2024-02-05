@@ -43,7 +43,6 @@ const Realisasi = () => {
               },
             },
           )
-          console.log('API Response:', selectedDateStart)
           const responData = response.data.data
           setData(responData)
           const calculatedNoa = responData.reduce((acc, user) => acc + user.nominalrp, 0)

@@ -19,12 +19,11 @@ const WidgetsDropdown = () => {
   const [dataB, setDataB] = useState([])
   const [dataC, setDataC] = useState([])
   const [dataD, setDataD] = useState([])
+  const token = localStorage.getItem('token')
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const token = localStorage.getItem('token')
-
         // Pastikan token ada sebelum membuat permintaan
         if (token) {
           const response = await axios.get(`${process.env.REACT_APP_URL_API}/customers/os`, {
@@ -42,27 +41,48 @@ const WidgetsDropdown = () => {
     }
     const fetchDataB = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_URL_API}/customers/os/01`)
-        const responData = response.data.data
-        setDataB(responData)
+        if (token) {
+          const response = await axios.get(`${process.env.REACT_APP_URL_API}/customers/os/01`, {
+            headers: {
+              Authorization: `${token}`,
+              'Content-Type': 'application/json',
+            },
+          })
+          const responData = response.data.data
+          setDataB(responData)
+        }
       } catch (error) {
         console.error('Error fetching users:', error)
       }
     }
     const fetchDataC = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_URL_API}/customers/os/02`)
-        const responData = response.data.data
-        setDataC(responData)
+        if (token) {
+          const response = await axios.get(`${process.env.REACT_APP_URL_API}/customers/os/02`, {
+            headers: {
+              Authorization: `${token}`,
+              'Content-Type': 'application/json',
+            },
+          })
+          const responData = response.data.data
+          setDataC(responData)
+        }
       } catch (error) {
         console.error('Error fetching users:', error)
       }
     }
     const fetchDataD = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_URL_API}/customers/os/03`)
-        const responData = response.data.data
-        setDataD(responData)
+        if (token) {
+          const response = await axios.get(`${process.env.REACT_APP_URL_API}/customers/os/03`, {
+            headers: {
+              Authorization: `${token}`,
+              'Content-Type': 'application/json',
+            },
+          })
+          const responData = response.data.data
+          setDataD(responData)
+        }
       } catch (error) {
         console.error('Error fetching users:', error)
       }
