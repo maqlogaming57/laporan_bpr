@@ -20,7 +20,7 @@ import axios from 'axios'
 const Kolekbilitas = () => {
   const [data, setData] = useState([])
   const [totalNominal, setTotalNomial] = useState(0)
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   const [selectedColl, setSeletedColl] = useState('')
 
   useEffect(() => {

@@ -237,6 +237,44 @@ const Dashboard = () => {
     <>
       <WidgetsDropdown />
       <CRow>
+        {/* <CCol xs={12} sm={7} lg={6}>
+          <CCard className="mb-4">
+            <CCardHeader>
+              <strong>Nasabah</strong> <small>COLL 2</small>
+            </CCardHeader>
+            <CTable small striped hover>
+              <CTableHead color="dark">
+                <CTableRow>
+                  <CTableHeaderCell scope="col">#</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Nama</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Hari</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Osmdlc</CTableHeaderCell>
+                </CTableRow>
+              </CTableHead>
+              <CTableBody>
+                {data.map((ost, index) => {
+                  // const osmdlcValue = ost.totalos
+                  // const col3Value = dataNpf[index]?.col_3 || 0
+                  const presentase = ((totalNpf / ost.totalos) * 100).toFixed(2).slice(0, 5)
+                  return (
+                    <CTableRow key={index}>
+                      <CTableHeaderCell scope="row">{index + i}</CTableHeaderCell>
+                      <CTableDataCell>{ost.totalos}</CTableDataCell>
+                      <CTableDataCell>{ost.haritgkmdl}</CTableDataCell>
+                      <CTableDataCell>{presentase}%</CTableDataCell>
+                    </CTableRow>
+                  )
+                })}
+                <CTableRow>
+                  <CTableHeaderCell colSpan="3" className="text-end">
+                    Total
+                  </CTableHeaderCell>
+                  <CTableDataCell>{formatToRupiah(totalNominal)}</CTableDataCell>
+                </CTableRow>
+              </CTableBody>
+            </CTable>
+          </CCard>
+        </CCol> */}
         <CCol xs={12} sm={7} lg={6}>
           <CCard className="mb-4">
             <CCardHeader>
@@ -295,44 +333,6 @@ const Dashboard = () => {
                     </React.Fragment>
                   )
                 })}
-              </CTableBody>
-            </CTable>
-          </CCard>
-        </CCol>
-        <CCol xs={12} sm={7} lg={6}>
-          <CCard className="mb-4">
-            <CCardHeader>
-              <strong>Nasabah</strong> <small>COLL 2</small>
-            </CCardHeader>
-            <CTable small striped hover>
-              <CTableHead color="dark">
-                <CTableRow>
-                  <CTableHeaderCell scope="col">#</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Nama</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Hari</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Osmdlc</CTableHeaderCell>
-                </CTableRow>
-              </CTableHead>
-              <CTableBody>
-                {data.map((ost, index) => {
-                  // const osmdlcValue = ost.totalos
-                  // const col3Value = dataNpf[index]?.col_3 || 0
-                  const presentase = ((totalNpf / ost.totalos) * 100).toFixed(2).slice(0, 5)
-                  return (
-                    <CTableRow key={index}>
-                      <CTableHeaderCell scope="row">{index + i}</CTableHeaderCell>
-                      <CTableDataCell>{ost.totalos}</CTableDataCell>
-                      <CTableDataCell>{ost.haritgkmdl}</CTableDataCell>
-                      <CTableDataCell>{presentase}%</CTableDataCell>
-                    </CTableRow>
-                  )
-                })}
-                <CTableRow>
-                  <CTableHeaderCell colSpan="3" className="text-end">
-                    Total
-                  </CTableHeaderCell>
-                  <CTableDataCell>{formatToRupiah(totalNominal)}</CTableDataCell>
-                </CTableRow>
               </CTableBody>
             </CTable>
           </CCard>

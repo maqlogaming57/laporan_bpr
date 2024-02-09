@@ -164,7 +164,7 @@ const Realisasi = () => {
                     <CTableDataCell>{user.kdaoh}</CTableDataCell>
                     <CTableDataCell>{user.nama}</CTableDataCell>
                     <CTableDataCell>{formatToRupiah(user.nominalrp)}</CTableDataCell>
-                    <CTableDataCell>{user.noa}</CTableDataCell>
+                    <CTableDataCell>{user.kdprd}</CTableDataCell>
                     <CTableDataCell>{user.kdloc}</CTableDataCell>
                   </CTableRow>
                 </React.Fragment>

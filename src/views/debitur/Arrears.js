@@ -13,6 +13,7 @@ import {
   CTableBody,
   CTableDataCell,
   CFormInput,
+  CSpinner,
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import * as icon from '@coreui/icons'
@@ -98,37 +99,45 @@ const Arrears = () => {
               <CPaginationItem onClick={handlenextpage}>Next</CPaginationItem>
             </CPagination> */}
           </CCardBody>
-
-          <CTable responsive>
-            <CTableHead color="dark">
-              <CTableRow>
-                <CTableHeaderCell scope="col">#</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Nokontrak</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Nama</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Angsuran</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Alamat</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Kdprd</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Hari</CTableHeaderCell>
-                <CTableHeaderCell scope="col">HP</CTableHeaderCell>
-              </CTableRow>
-            </CTableHead>
-            <CTableBody>
-              {dataSekolah.map((user, index) => (
-                <React.Fragment key={index}>
+          {loading ? (
+            <div className="text-center mt-3">
+              <CSpinner color="primary" />
+              <div>Loading...</div>
+            </div>
+          ) : (
+            <div>
+              <CTable responsive>
+                <CTableHead color="dark">
                   <CTableRow>
-                    <CTableHeaderCell scope="row">{++i}</CTableHeaderCell>
-                    <CTableDataCell>{user.nokontrak}</CTableDataCell>
-                    <CTableDataCell>{user.nm}</CTableDataCell>
-                    <CTableDataCell>{formatToRupiah(user.angsuran)}</CTableDataCell>
-                    <CTableDataCell>{user.alamat}</CTableDataCell>
-                    <CTableDataCell>{user.kdprd}</CTableDataCell>
-                    <CTableDataCell>{user.hari}</CTableDataCell>
-                    <CTableDataCell>{user.hp}</CTableDataCell>
+                    <CTableHeaderCell scope="col">#</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">Nokontrak</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">Nama</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">Angsuran</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">Alamat</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">Kdprd</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">Hari</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">HP</CTableHeaderCell>
                   </CTableRow>
-                </React.Fragment>
-              ))}
-            </CTableBody>
-          </CTable>
+                </CTableHead>
+                <CTableBody>
+                  {dataSekolah.map((user, index) => (
+                    <React.Fragment key={index}>
+                      <CTableRow>
+                        <CTableHeaderCell scope="row">{++i}</CTableHeaderCell>
+                        <CTableDataCell>{user.nokontrak}</CTableDataCell>
+                        <CTableDataCell>{user.nm}</CTableDataCell>
+                        <CTableDataCell>{formatToRupiah(user.angsuran)}</CTableDataCell>
+                        <CTableDataCell>{user.alamat}</CTableDataCell>
+                        <CTableDataCell>{user.kdprd}</CTableDataCell>
+                        <CTableDataCell>{user.hari}</CTableDataCell>
+                        <CTableDataCell>{user.hp}</CTableDataCell>
+                      </CTableRow>
+                    </React.Fragment>
+                  ))}
+                </CTableBody>
+              </CTable>
+            </div>
+          )}
         </CCard>
       </CCol>
     </CRow>
