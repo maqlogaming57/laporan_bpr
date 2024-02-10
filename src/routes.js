@@ -12,6 +12,7 @@ const Canvas = React.lazy(() => import('./views/canvas/Canvas'))
 const Arrears = React.lazy(() => import('./views/debitur/Arrears'))
 const Realisasi = React.lazy(() => import('./views/debitur/Realisasi'))
 
+const Changepwd = React.lazy(() => import('./views/changepwd/Changepwd'))
 // Base
 const Accordion = React.lazy(() => import('./views/base/accordion/Accordion'))
 const Breadcrumbs = React.lazy(() => import('./views/base/breadcrumbs/Breadcrumbs'))
@@ -67,6 +68,7 @@ const routes = [
   { path: '/references/arrears', name: 'Arrears', element: Arrears },
   { path: '/references/kolekbilitas', name: 'Kolekbilitas', element: Kolekbilitas },
   { path: '/references/relisasi', name: 'Realisasi', element: Realisasi },
+  { path: '/references/changpwd', name: 'Change Password', element: Changepwd },
   { path: '/theme', name: 'Theme', element: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', element: Colors },
   { path: '/theme/debitur/ViewDebiturs', name: 'ViewDebiturs', element: ViewDebiturs },

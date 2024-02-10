@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react'
 import {
   CCard,
@@ -102,12 +103,6 @@ const Canvas = () => {
                 </CFormSelect>
               </CCol>
             </CForm>
-            <CPagination align="end" aria-label="Page navigation example" mg>
-              <CPaginationItem onClick={handleprevtpage} disabled={selectedPage === 1}>
-                Previous
-              </CPaginationItem>
-              <CPaginationItem onClick={handlenextpage}>Next</CPaginationItem>
-            </CPagination>
           </CCardBody>
 
           <CTable responsive>
@@ -134,6 +129,14 @@ const Canvas = () => {
               ))}
             </CTableBody>
           </CTable>
+          <div>
+            <CPagination align="end" aria-label="Page navigation example" mg>
+              <CPaginationItem onClick={handleprevtpage} disabled={selectedPage === 1}>
+                Previous
+              </CPaginationItem>
+              <CPaginationItem onClick={handlenextpage}>Next</CPaginationItem>
+            </CPagination>
+          </div>
         </CCard>
       </CCol>
     </CRow>
