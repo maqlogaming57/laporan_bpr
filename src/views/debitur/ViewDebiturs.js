@@ -43,7 +43,7 @@ const ViewDebiturs = () => {
       <CCol xs={12}>
         <CCard className="mb-4">
           <CCardHeader>
-            <strong>React Table</strong> <small>Basic example</small>
+            <strong>Detail</strong> <small>Data Nasabah</small>
           </CCardHeader>
           <CTable color="success" striped>
             <CTableHead>

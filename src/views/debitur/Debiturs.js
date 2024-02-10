@@ -75,7 +75,7 @@ const Debiturs = () => {
       <CCol xs={12}>
         <CCard className="mb-4">
           <CCardHeader>
-            <strong>React Table</strong> <small>Basic example</small>
+            <strong>Informasi Debitur</strong>
           </CCardHeader>
           <CCardBody>
             <p className="text-medium-emphasis small">

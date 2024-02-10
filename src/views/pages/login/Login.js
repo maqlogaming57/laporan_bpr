@@ -48,7 +48,7 @@ const Login = () => {
               <CCard className="p-5">
                 <CCardBody>
                   <CForm>
-                    <h1>Login</h1>
+                    <h1>HikBa</h1>
                     <p className="text-medium-emphasis">Sign In to your account</p>
                     {loginError && (
                       <CAlert color="danger" closeButton>
@@ -80,19 +80,21 @@ const Login = () => {
                         onChange={(e) => setPassword(e.target.value)}
                       />
                     </CInputGroup>
-                    <CRow>
-                      <CCol xs={6}>
-                        <CButton
-                          color="primary"
-                          className="px-4"
-                          disabled={!isFormValid}
-                          onClick={handlelogin}
-                        >
-                          Login
-                        </CButton>
-                      </CCol>
-                      <CCol xs={6} className="text-right"></CCol>
-                    </CRow>
+                    <div style={{ justifyContent: 'center' }}>
+                      <CRow>
+                        <CCol xs={6}>
+                          <CButton
+                            color="success"
+                            className="px-4"
+                            disabled={!isFormValid}
+                            onClick={handlelogin}
+                          >
+                            Login
+                          </CButton>
+                        </CCol>
+                        <CCol xs={6} className="text-right"></CCol>
+                      </CRow>
+                    </div>
                   </CForm>
                 </CCardBody>
               </CCard>

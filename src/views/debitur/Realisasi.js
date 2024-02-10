@@ -14,8 +14,6 @@ import {
   CTableDataCell,
   CFormInput,
 } from '@coreui/react'
-import CIcon from '@coreui/icons-react'
-import * as icon from '@coreui/icons'
 import axios from 'axios'
 
 const Realisasi = () => {
@@ -90,7 +88,7 @@ const Realisasi = () => {
       <CCol xs={12}>
         <CCard className="mb-4">
           <CCardHeader>
-            <strong>React Table</strong> <small>Basic example</small>
+            <strong>Realisasi</strong> <small>Per-Ao</small>
           </CCardHeader>
           <CCardBody>
             <strong className="text-medium-emphasis small">Periode</strong>

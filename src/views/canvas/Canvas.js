@@ -16,8 +16,6 @@ import {
   CPagination,
   CPaginationItem,
 } from '@coreui/react'
-import CIcon from '@coreui/icons-react'
-import * as icon from '@coreui/icons'
 import axios from 'axios'
 
 const Canvas = () => {
@@ -68,13 +66,9 @@ const Canvas = () => {
       <CCol xs={12}>
         <CCard className="mb-4">
           <CCardHeader>
-            <strong>React Table</strong> <small>Basic example</small>
+            <strong>Data Sekolah Perkota</strong> <small>Basic example</small>
           </CCardHeader>
           <CCardBody>
-            <p className="text-medium-emphasis small">
-              Using the most basic table CoreUIs how <code>&lt;CTable&gt;</code>-based tables look
-              in CoreUI.
-            </p>
             <CForm className="row g-3">
               <CCol xs="auto">
                 <CFormSelect
@@ -116,7 +110,7 @@ const Canvas = () => {
             </CPagination>
           </CCardBody>
 
-          <CTable>
+          <CTable responsive>
             <CTableHead color="dark">
               <CTableRow>
                 <CTableHeaderCell scope="col">#</CTableHeaderCell>

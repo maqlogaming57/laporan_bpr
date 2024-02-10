@@ -15,8 +15,6 @@ import {
   CFormInput,
   CSpinner,
 } from '@coreui/react'
-import CIcon from '@coreui/icons-react'
-import * as icon from '@coreui/icons'
 import axios from 'axios'
 
 const Arrears = () => {
@@ -80,13 +78,9 @@ const Arrears = () => {
       <CCol xs={12}>
         <CCard className="mb-4">
           <CCardHeader>
-            <strong>React Table</strong> <small>Basic example</small>
+            <strong>Tunggakan Harian</strong>
           </CCardHeader>
           <CCardBody>
-            <p className="text-medium-emphasis small">
-              Using the most basic table CoreUIs how <code>&lt;CTable&gt;</code>-based tables look
-              in CoreUI.
-            </p>
             <CForm className="row g-3">
               <CCol xs="auto">
                 <CFormInput type="date" onChange={handleDateChange} />
