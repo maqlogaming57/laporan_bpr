@@ -175,6 +175,7 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true)
   const [dataNpf, setDataNpf] = useState([])
   const [totalNpf, setTotalNpf] = useState(0)
+  const [npfLoc, setNpfLoc] = useState([])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -210,6 +211,17 @@ const Dashboard = () => {
           setTotalNpf(calculatedNpf)
           setLoading(false)
         }
+        if (token) {
+          const responseNpfLoc = await axios.get(`${process.env.REACT_APP_URL_API}/colls/kdloc`, {
+            headers: {
+              Authorization: `${token}`,
+              'Content-Type': 'application/json',
+            },
+          })
+          const responseDataLoc = responseNpfLoc.data.data
+          setNpfLoc(responseDataLoc)
+          setLoading(false)
+        }
       } catch (error) {
         console.error('Error fetching users:', error)
         setLoading(false)
@@ -237,44 +249,64 @@ const Dashboard = () => {
     <>
       <WidgetsDropdown />
       <CRow>
-        {/* <CCol xs={12} sm={7} lg={6}>
+        <CCol xs={12} sm={7} lg={6}>
           <CCard className="mb-4">
             <CCardHeader>
-              <strong>Nasabah</strong> <small>COLL 2</small>
+              <strong>Nasabah</strong> <small>NPF Per-cabang</small>
             </CCardHeader>
             <CTable small striped hover>
               <CTableHead color="dark">
                 <CTableRow>
                   <CTableHeaderCell scope="col">#</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Nama</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Cabang</CTableHeaderCell>
                   <CTableHeaderCell scope="col">Hari</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Osmdlc</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">%</CTableHeaderCell>
                 </CTableRow>
               </CTableHead>
               <CTableBody>
-                {data.map((ost, index) => {
-                  // const osmdlcValue = ost.totalos
-                  // const col3Value = dataNpf[index]?.col_3 || 0
-                  const presentase = ((totalNpf / ost.totalos) * 100).toFixed(2).slice(0, 5)
+                {npfLoc.map((ost, index) => {
                   return (
-                    <CTableRow key={index}>
-                      <CTableHeaderCell scope="row">{index + i}</CTableHeaderCell>
-                      <CTableDataCell>{ost.totalos}</CTableDataCell>
-                      <CTableDataCell>{ost.haritgkmdl}</CTableDataCell>
-                      <CTableDataCell>{presentase}%</CTableDataCell>
-                    </CTableRow>
+                    <>
+                      <CTableRow key={index}>
+                        <CTableHeaderCell scope="row">{index + i}</CTableHeaderCell>
+                        <CTableDataCell>KCP Pusat</CTableDataCell>
+                        <CTableDataCell>{formatToRupiah(ost.kdloc_01)}</CTableDataCell>
+                        <CTableDataCell>
+                          {((ost.kdloc_01 / totalNominal) * 100).toFixed(2).slice(0, 4)}%
+                        </CTableDataCell>
+                      </CTableRow>
+                      <CTableRow>
+                        <CTableHeaderCell scope="row">{++i}</CTableHeaderCell>
+                        <CTableDataCell>Batang</CTableDataCell>
+                        <CTableDataCell>{formatToRupiah(ost.kdloc_02)}</CTableDataCell>
+                        <CTableDataCell>
+                          {((ost.kdloc_02 / totalNominal) * 100).toFixed(2).slice(0, 4)}%
+                        </CTableDataCell>
+                      </CTableRow>
+                      <CTableRow>
+                        <CTableHeaderCell scope="row">{++i}</CTableHeaderCell>
+                        <CTableDataCell>Purwokerto</CTableDataCell>
+                        <CTableDataCell>{formatToRupiah(ost.kdloc_03)}</CTableDataCell>
+                        <CTableDataCell>
+                          {((ost.kdloc_03 / totalNominal) * 100).toFixed(2).slice(0, 4)}%
+                        </CTableDataCell>
+                      </CTableRow>
+                      <CTableRow>
+                        <CTableHeaderCell colSpan="2" className="text-end">
+                          Total
+                        </CTableHeaderCell>
+                        <CTableDataCell>{formatToRupiah(ost.osnpf)}</CTableDataCell>
+                        <CTableDataCell>
+                          {((ost.osnpf / totalNominal) * 100).toFixed(2).slice(0, 4)}%
+                        </CTableDataCell>
+                      </CTableRow>
+                    </>
                   )
                 })}
-                <CTableRow>
-                  <CTableHeaderCell colSpan="3" className="text-end">
-                    Total
-                  </CTableHeaderCell>
-                  <CTableDataCell>{formatToRupiah(totalNominal)}</CTableDataCell>
-                </CTableRow>
               </CTableBody>
             </CTable>
           </CCard>
-        </CCol> */}
+        </CCol>
         <CCol xs={12} sm={7} lg={6}>
           <CCard className="mb-4">
             <CCardHeader>
