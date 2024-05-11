@@ -48,6 +48,12 @@ const ViewDebiturs = () => {
           <CTable color="success" striped>
             <CTableHead>
               <CTableRow>
+                <CTableHeaderCell scope="col">Nokontrak</CTableHeaderCell>
+                <CTableDataCell>{state.selectedUserData.nokontrak}</CTableDataCell>
+              </CTableRow>
+            </CTableHead>
+            <CTableHead>
+              <CTableRow>
                 <CTableHeaderCell scope="col">Nama</CTableHeaderCell>
                 <CTableDataCell>{state.selectedUserData.nama}</CTableDataCell>
               </CTableRow>
@@ -79,6 +85,12 @@ const ViewDebiturs = () => {
               <CTableRow>
                 <CTableHeaderCell scope="col">Alamat PT</CTableHeaderCell>
                 <CTableDataCell>{state.selectedUserData.alamatpt}</CTableDataCell>
+              </CTableRow>
+            </CTableHead>
+            <CTableHead>
+              <CTableRow>
+                <CTableHeaderCell scope="col">No Rekening</CTableHeaderCell>
+                <CTableDataCell>{state.selectedUserData.acdrop}</CTableDataCell>
               </CTableRow>
             </CTableHead>
             <CTableHead>
