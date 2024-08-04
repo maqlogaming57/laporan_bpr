@@ -106,11 +106,12 @@ const Arrears = () => {
                     <CTableHeaderCell scope="col">#</CTableHeaderCell>
                     <CTableHeaderCell scope="col">Nokontrak</CTableHeaderCell>
                     <CTableHeaderCell scope="col">Nama</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">HP</CTableHeaderCell>
                     <CTableHeaderCell scope="col">Angsuran</CTableHeaderCell>
                     <CTableHeaderCell scope="col">Alamat</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">AO</CTableHeaderCell>
                     <CTableHeaderCell scope="col">Kdprd</CTableHeaderCell>
                     <CTableHeaderCell scope="col">Hari</CTableHeaderCell>
-                    <CTableHeaderCell scope="col">HP</CTableHeaderCell>
                   </CTableRow>
                 </CTableHead>
                 <CTableBody>
@@ -120,11 +121,12 @@ const Arrears = () => {
                         <CTableHeaderCell scope="row">{++i}</CTableHeaderCell>
                         <CTableDataCell>{user.nokontrak}</CTableDataCell>
                         <CTableDataCell>{user.nm}</CTableDataCell>
+                        <CTableDataCell>{user.hp}</CTableDataCell>
                         <CTableDataCell>{formatToRupiah(user.angsuran)}</CTableDataCell>
                         <CTableDataCell>{user.alamat}</CTableDataCell>
+                        <CTableDataCell>{user.kdaoh}</CTableDataCell>
                         <CTableDataCell>{user.kdprd}</CTableDataCell>
                         <CTableDataCell>{user.hari}</CTableDataCell>
-                        <CTableDataCell>{user.hp}</CTableDataCell>
                       </CTableRow>
                     </React.Fragment>
                   ))}
