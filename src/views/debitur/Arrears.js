@@ -105,6 +105,7 @@ const Arrears = () => {
                   <CTableRow>
                     <CTableHeaderCell scope="col">#</CTableHeaderCell>
                     <CTableHeaderCell scope="col">Nokontrak</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">Norek</CTableHeaderCell>
                     <CTableHeaderCell scope="col">Nama</CTableHeaderCell>
                     <CTableHeaderCell scope="col">HP</CTableHeaderCell>
                     <CTableHeaderCell scope="col">Angsuran</CTableHeaderCell>
@@ -120,6 +121,7 @@ const Arrears = () => {
                       <CTableRow>
                         <CTableHeaderCell scope="row">{++i}</CTableHeaderCell>
                         <CTableDataCell>{user.nokontrak}</CTableDataCell>
+                        <CTableDataCell>{user.acdrop}</CTableDataCell>
                         <CTableDataCell>{user.nm}</CTableDataCell>
                         <CTableDataCell>{user.hp}</CTableDataCell>
                         <CTableDataCell>{formatToRupiah(user.angsuran)}</CTableDataCell>
