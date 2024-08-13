@@ -72,7 +72,7 @@ const Arrears = () => {
       Nama: user.nm,
       HP: user.hp,
       Angsuran: user.angsuran,
-      tgltagih: user.tgltagih,
+      tgltagih: formatDate(user.tgltagih),
       Norek: user.acdrop,
     }))
 
@@ -99,6 +99,27 @@ const Arrears = () => {
       .format(amount)
       .replace('Rp', '')
       .trim()
+  }
+  const formatDate = (dateString) => {
+    // Pastikan dateString memiliki format yang dapat dikenali oleh JavaScript Date
+    if (!dateString || dateString.length !== 8) {
+      return 'Tanggal tidak valid'
+    }
+
+    // Misalnya dateString dalam format YYYYMMDD (contoh: 20240813)
+    const year = dateString.slice(0, 4)
+    const month = dateString.slice(4, 6)
+    const day = dateString.slice(6, 8)
+
+    const date = new Date(`${year}-${month}-${day}`)
+    const options = { day: 'numeric', month: 'long', year: 'numeric' }
+
+    // Cek apakah date valid
+    if (isNaN(date.getTime())) {
+      return 'Tanggal tidak valid'
+    }
+
+    return date.toLocaleDateString('id-ID', options)
   }
 
   return (
@@ -159,11 +180,11 @@ const Arrears = () => {
                       <CTableDataCell>{user.nm}</CTableDataCell>
                       <CTableDataCell>{user.hp}</CTableDataCell>
                       <CTableDataCell>{formatToRupiah(user.angsuran)}</CTableDataCell>
-                      <CTableDataCell>{user.tgltagih}</CTableDataCell>
+                      <CTableDataCell>{formatDate(user.tgltagih)}</CTableDataCell>
                       <CTableDataCell>{user.alamat}</CTableDataCell>
                       <CTableDataCell>{user.kdaoh}</CTableDataCell>
                       <CTableDataCell>{user.kdprd}</CTableDataCell>
-                      <CTableDataCell>{user.hari}</CTableDataCell>
+                      <CTableDataCell>{user.haritgk}</CTableDataCell>
                     </CTableRow>
                   ))}
                 </CTableBody>
