@@ -14,8 +14,11 @@ import {
   CTableDataCell,
   CFormInput,
   CSpinner,
+  CButton,
 } from '@coreui/react'
 import axios from 'axios'
+import * as XLSX from 'xlsx'
+import { saveAs } from 'file-saver'
 
 const Arrears = () => {
   const [dataSekolah, setData] = useState([])
@@ -60,6 +63,31 @@ const Arrears = () => {
     setSeletedDate(formattedDate)
   }
 
+  const handleExportExcel = () => {
+    const header = [
+      { Nama: 'Nama', HP: 'HP', Angsuran: 'Angsuran', tgltagih: 'tgltagih', Norek: 'Norek' },
+    ]
+
+    const dataHeader = dataSekolah.map((user) => ({
+      Nama: user.nm,
+      HP: user.hp,
+      Angsuran: user.angsuran,
+      tgltagih: user.tgltagih,
+      Norek: user.acdrop,
+    }))
+
+    const finalData = [...header, ...dataHeader]
+
+    const worksheet = XLSX.utils.json_to_sheet(finalData, { skipHeader: true })
+
+    const workbook = XLSX.utils.book_new()
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Data Arrears')
+
+    const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' })
+    const data = new Blob([excelBuffer], { type: 'application/octet-stream' })
+    saveAs(data, `Data_Arrears_${selectedDate}.xlsx`)
+  }
+
   let i = (selectedPage - 1) * perPage
   const formatToRupiah = (amount) => {
     return new Intl.NumberFormat('id-ID', {
@@ -85,6 +113,11 @@ const Arrears = () => {
               <CCol xs="auto">
                 <CFormInput type="date" onChange={handleDateChange} />
               </CCol>
+              <CCol xs="auto">
+                <CButton color="secondary" onClick={handleExportExcel}>
+                  Export Template Wa Blast!
+                </CButton>
+              </CCol>
             </CForm>
             {/* <CPagination align="end" aria-label="Page navigation example" mg={true}>
               <CPaginationItem onClick={handleprevtpage} disabled={selectedPage === 1}>
@@ -109,6 +142,7 @@ const Arrears = () => {
                     <CTableHeaderCell scope="col">Nama</CTableHeaderCell>
                     <CTableHeaderCell scope="col">HP</CTableHeaderCell>
                     <CTableHeaderCell scope="col">Angsuran</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">Jatuh Tempo</CTableHeaderCell>
                     <CTableHeaderCell scope="col">Alamat</CTableHeaderCell>
                     <CTableHeaderCell scope="col">AO</CTableHeaderCell>
                     <CTableHeaderCell scope="col">Kdprd</CTableHeaderCell>
@@ -117,20 +151,20 @@ const Arrears = () => {
                 </CTableHead>
                 <CTableBody>
                   {dataSekolah.map((user, index) => (
-                    <React.Fragment key={index}>
-                      <CTableRow>
-                        <CTableHeaderCell scope="row">{++i}</CTableHeaderCell>
-                        <CTableDataCell>{user.nokontrak}</CTableDataCell>
-                        <CTableDataCell>{user.acdrop}</CTableDataCell>
-                        <CTableDataCell>{user.nm}</CTableDataCell>
-                        <CTableDataCell>{user.hp}</CTableDataCell>
-                        <CTableDataCell>{formatToRupiah(user.angsuran)}</CTableDataCell>
-                        <CTableDataCell>{user.alamat}</CTableDataCell>
-                        <CTableDataCell>{user.kdaoh}</CTableDataCell>
-                        <CTableDataCell>{user.kdprd}</CTableDataCell>
-                        <CTableDataCell>{user.hari}</CTableDataCell>
-                      </CTableRow>
-                    </React.Fragment>
+                    // eslint-disable-next-line react/jsx-key
+                    <CTableRow>
+                      <CTableHeaderCell scope="row">{++i}</CTableHeaderCell>
+                      <CTableDataCell>{user.nokontrak}</CTableDataCell>
+                      <CTableDataCell>{user.acdrop}</CTableDataCell>
+                      <CTableDataCell>{user.nm}</CTableDataCell>
+                      <CTableDataCell>{user.hp}</CTableDataCell>
+                      <CTableDataCell>{formatToRupiah(user.angsuran)}</CTableDataCell>
+                      <CTableDataCell>{user.tgltagih}</CTableDataCell>
+                      <CTableDataCell>{user.alamat}</CTableDataCell>
+                      <CTableDataCell>{user.kdaoh}</CTableDataCell>
+                      <CTableDataCell>{user.kdprd}</CTableDataCell>
+                      <CTableDataCell>{user.hari}</CTableDataCell>
+                    </CTableRow>
                   ))}
                 </CTableBody>
               </CTable>
