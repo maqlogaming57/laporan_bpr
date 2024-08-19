@@ -19,6 +19,8 @@ import {
 import axios from 'axios'
 import * as XLSX from 'xlsx'
 import { saveAs } from 'file-saver'
+import * as icon from '@coreui/icons'
+import CIcon from '@coreui/icons-react'
 
 const Arrears = () => {
   const [dataSekolah, setData] = useState([])
@@ -135,8 +137,8 @@ const Arrears = () => {
                 <CFormInput type="date" onChange={handleDateChange} />
               </CCol>
               <CCol xs="auto">
-                <CButton color="secondary" onClick={handleExportExcel}>
-                  Export Template Wa Blast!
+                <CButton color="success" onClick={handleExportExcel}>
+                  <CIcon icon={icon.cilDescription} title="Export to Excel" />
                 </CButton>
               </CCol>
             </CForm>
