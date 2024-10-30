@@ -13,6 +13,8 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CFormInput,
+  CForm,
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import {
@@ -176,62 +178,76 @@ const Dashboard = () => {
   const [dataNpf, setDataNpf] = useState([])
   const [totalNpf, setTotalNpf] = useState(0)
   const [npfLoc, setNpfLoc] = useState([])
+  const [cashRatio, setCR] = useState([])
+  const [selectedDate, setSelectedDate] = useState('')
+  const [pengurang2, setPengurang2] = useState(1608000000)
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const token = localStorage.getItem('token')
+      setLoading(true)
+      const token = localStorage.getItem('token')
 
+      try {
         // Pastikan token ada sebelum membuat permintaan
-        if (token) {
-          const response = await axios.get(`${process.env.REACT_APP_URL_API}/customers/os`, {
-            headers: {
-              Authorization: `${token}`,
-              'Content-Type': 'application/json',
+        const response = await axios.get(`${process.env.REACT_APP_URL_API}/customers/os`, {
+          headers: {
+            Authorization: `${token}`,
+            'Content-Type': 'application/json',
+          },
+        })
+        const responData = response.data.data
+        setData(responData)
+        const calculatedTotal = responData.reduce((acc, user) => acc + user.totalos, 0)
+        setTotalNomial(calculatedTotal)
+
+        const responseNpf = await axios.get(`${process.env.REACT_APP_URL_API}/colls/npf`, {
+          headers: {
+            Authorization: `${token}`,
+            'Content-Type': 'application/json',
+          },
+        })
+        const responDataNpf = responseNpf.data.data
+        setDataNpf(responDataNpf)
+        const calculatedNpf = responDataNpf.reduce(
+          (acc, user) => acc + user.col_3 + user.col_4 + user.col_5,
+          0,
+        )
+        setTotalNpf(calculatedNpf)
+        setLoading(false)
+
+        const responseNpfLoc = await axios.get(`${process.env.REACT_APP_URL_API}/colls/kdloc`, {
+          headers: {
+            Authorization: `${token}`,
+            'Content-Type': 'application/json',
+          },
+        })
+        const responseDataLoc = responseNpfLoc.data.data
+        setNpfLoc(responseDataLoc)
+        setLoading(false)
+
+        if (selectedDate) {
+          const [year, month, day] = selectedDate.split('-') // Format YYYY-MM-DD
+          const responCR = await axios.get(
+            `${process.env.REACT_APP_URL_API}/cashratio/${day}/${month}/${year}`,
+            {
+              headers: {
+                Authorization: `${token}`,
+                'Content-Type': 'application/json',
+              },
             },
-          })
-          const responData = response.data.data
-          setData(responData)
-          const calculatedTotal = responData.reduce((acc, user) => acc + user.totalos, 0)
-          setTotalNomial(calculatedTotal)
-        }
-        if (token) {
-          const responseNpf = await axios.get(`${process.env.REACT_APP_URL_API}/colls/npf`, {
-            headers: {
-              Authorization: `${token}`,
-              'Content-Type': 'application/json',
-            },
-          })
-          const responDataNpf = responseNpf.data.data
-          setDataNpf(responDataNpf)
-          const calculatedNpf = responDataNpf.reduce(
-            (acc, user) => acc + user.col_3 + user.col_4 + user.col_5,
-            0,
           )
-          setTotalNpf(calculatedNpf)
-          setLoading(false)
-        }
-        if (token) {
-          const responseNpfLoc = await axios.get(`${process.env.REACT_APP_URL_API}/colls/kdloc`, {
-            headers: {
-              Authorization: `${token}`,
-              'Content-Type': 'application/json',
-            },
-          })
-          const responseDataLoc = responseNpfLoc.data.data
-          setNpfLoc(responseDataLoc)
-          setLoading(false)
+          const responsedataCr = responCR.data.data
+          setCR(responsedataCr)
         }
       } catch (error) {
-        console.error('Error fetching users:', error)
-        setLoading(false)
+        console.error('Error fetching data:', error)
+      } finally {
+        setLoading(false) // Pastikan loading selesai
       }
     }
 
-    if (loading) {
-      fetchData()
-    }
-  }, [loading])
+    fetchData() // Panggil fungsi fetchData
+  }, [selectedDate]) // Fetch data saat selectedDate berubah
 
   const formatToRupiah = (amount) => {
     return new Intl.NumberFormat('id-ID', {
@@ -259,7 +275,7 @@ const Dashboard = () => {
                 <CTableRow>
                   <CTableHeaderCell scope="col">#</CTableHeaderCell>
                   <CTableHeaderCell scope="col">Cabang</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Hari</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">OS</CTableHeaderCell>
                   <CTableHeaderCell scope="col">%</CTableHeaderCell>
                 </CTableRow>
               </CTableHead>
@@ -363,6 +379,78 @@ const Dashboard = () => {
                         </CTableDataCell>
                       </CTableRow>
                     </React.Fragment>
+                  )
+                })}
+              </CTableBody>
+            </CTable>
+          </CCard>
+        </CCol>
+        <CCol xs={12} sm={7} lg={6}>
+          <CCard className="mb-4">
+            <CCardHeader>
+              <strong>Cash Ratio</strong>
+            </CCardHeader>
+            <CCol xs="auto">
+              <CFormInput
+                type="date"
+                onChange={(e) => setSelectedDate(e.target.value)}
+                value={selectedDate}
+              />
+            </CCol>
+            <CTable small striped hover>
+              <CTableHead color="dark">
+                <CCol xs="auto"></CCol>
+                <CTableRow>
+                  <CTableHeaderCell scope="col">#</CTableHeaderCell>
+                  <CTableHeaderCell scope="col"></CTableHeaderCell>
+                  <CTableHeaderCell scope="col"></CTableHeaderCell>
+                </CTableRow>
+              </CTableHead>
+              <CTableBody>
+                {cashRatio.map((cr, index) => {
+                  const likiuditas = cr.likuid
+                  const pengurang = cr.pengurang
+                  const pembagi = cr.pembagi
+
+                  const totalCashRatio = (likiuditas - pengurang - pengurang2) / pembagi
+                  const totalCR = totalCashRatio * 100
+
+                  return (
+                    <>
+                      <CTableRow key={index}>
+                        <CTableHeaderCell scope="row">{index + i}</CTableHeaderCell>
+                        <CTableDataCell>Likiuditas</CTableDataCell>
+                        <CTableDataCell>{formatToRupiah(cr.likuid)}</CTableDataCell>
+                      </CTableRow>
+                      <CTableRow>
+                        <CTableHeaderCell scope="row">{++i}</CTableHeaderCell>
+                        <CTableDataCell>Pengurang</CTableDataCell>
+                        <CTableDataCell>{formatToRupiah(cr.pengurang)}</CTableDataCell>
+                      </CTableRow>
+                      <CTableRow>
+                        <CTableHeaderCell scope="row">{++i}</CTableHeaderCell>
+                        <CTableDataCell>Pengurang 2</CTableDataCell>
+                        <CTableDataCell>
+                          <CFormInput
+                            type="number"
+                            value={pengurang2}
+                            onChange={(e) => setPengurang2(Number(e.target.value))} // Perbarui state saat input berubah
+                          />
+                          <small>{formatToRupiah(pengurang2)}</small>
+                        </CTableDataCell>
+                      </CTableRow>
+                      <CTableRow>
+                        <CTableHeaderCell scope="row">{++i}</CTableHeaderCell>
+                        <CTableDataCell>Pembagi</CTableDataCell>
+                        <CTableDataCell>{formatToRupiah(cr.pembagi)}</CTableDataCell>
+                      </CTableRow>
+                      <CTableRow>
+                        <CTableHeaderCell colSpan="2" className="text-end">
+                          Cash Ratio
+                        </CTableHeaderCell>
+                        <CTableDataCell>{totalCR.toFixed(2)}%</CTableDataCell>
+                      </CTableRow>
+                    </>
                   )
                 })}
               </CTableBody>
